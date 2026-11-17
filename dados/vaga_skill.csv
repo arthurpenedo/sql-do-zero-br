@@ -1,0 +1,1188 @@
+﻿id,skill
+1,APIs REST
+1,APIs de LLM (OpenAI/Anthropic/Gemini)
+1,Agentes de IA
+1,Avaliação de LLM
+1,Embeddings / banco vetorial
+1,LLM / IA generativa
+1,LangChain/LangGraph
+1,MCP
+1,MLOps
+1,Prompt engineering
+1,Python
+1,RAG
+1,React
+2,APIs REST
+2,Azure
+2,C#/.NET
+2,Inglês
+2,LGPD / segurança
+2,LLM / IA generativa
+2,RAG
+2,Testes automatizados
+3,Agentes de IA
+3,LLM / IA generativa
+3,RPA / Power Automate
+4,APIs REST
+4,Agentes de IA
+4,CI/CD
+4,LLM / IA generativa
+4,Machine Learning
+4,RAG
+4,Testes automatizados
+5,APIs REST
+5,APIs de LLM (OpenAI/Anthropic/Gemini)
+5,Agentes de IA
+5,Azure
+5,CI/CD
+5,Docker
+5,Embeddings / banco vetorial
+5,GCP
+5,Git
+5,LLM / IA generativa
+5,MLOps
+5,Prompt engineering
+5,Python
+5,RAG
+5,SQL
+5,Testes automatizados
+6,APIs REST
+6,Agentes de IA
+6,Avaliação de LLM
+6,Azure
+6,CI/CD
+6,Docker
+6,Embeddings / banco vetorial
+6,Git
+6,LLM / IA generativa
+6,LangChain/LangGraph
+6,Prompt engineering
+6,Python
+6,RAG
+6,SQL
+7,Agentes de IA
+7,Inglês
+7,Métodos ágeis
+8,APIs REST
+8,APIs de LLM (OpenAI/Anthropic/Gemini)
+8,Agentes de IA
+8,Avaliação de LLM
+8,Deep Learning
+8,Embeddings / banco vetorial
+8,Inglês
+8,LGPD / segurança
+8,LLM / IA generativa
+8,LangChain/LangGraph
+8,Machine Learning
+8,Prompt engineering
+8,Python
+8,RAG
+9,APIs REST
+9,APIs de LLM (OpenAI/Anthropic/Gemini)
+9,Agentes de IA
+9,Avaliação de LLM
+9,Docker
+9,Embeddings / banco vetorial
+9,Git
+9,LLM / IA generativa
+9,LangChain/LangGraph
+9,Linux
+9,MCP
+9,Prompt engineering
+9,Python
+9,RAG
+9,SQL
+9,n8n / Make / Zapier
+10,LGPD / segurança
+10,Métodos ágeis
+11,APIs de LLM (OpenAI/Anthropic/Gemini)
+11,Inglês
+12,APIs REST
+12,Agentes de IA
+12,Avaliação de LLM
+12,Deep Learning
+12,Embeddings / banco vetorial
+12,Git
+12,LGPD / segurança
+12,LLM / IA generativa
+12,MLOps
+12,Machine Learning
+12,Pandas / NumPy
+12,Prompt engineering
+12,Python
+12,RAG
+12,SQL
+13,APIs REST
+13,APIs de LLM (OpenAI/Anthropic/Gemini)
+13,Agentes de IA
+13,Avaliação de LLM
+13,CI/CD
+13,GCP
+13,Git
+13,Inglês
+13,LLM / IA generativa
+13,MLOps
+13,Python
+14,AWS
+14,Agentes de IA
+14,Avaliação de LLM
+14,Azure
+14,CI/CD
+14,Deep Learning
+14,Embeddings / banco vetorial
+14,GCP
+14,LLM / IA generativa
+14,LangChain/LangGraph
+14,Machine Learning
+14,Python
+14,RAG
+14,Testes automatizados
+15,Inglês
+15,Métodos ágeis
+16,APIs REST
+16,Agentes de IA
+16,LGPD / segurança
+16,LLM / IA generativa
+16,SQL
+17,Inglês
+17,Power BI / BI
+17,Python
+17,n8n / Make / Zapier
+18,APIs REST
+18,AWS
+18,Agentes de IA
+18,Azure
+18,CI/CD
+18,GCP
+18,Inglês
+18,LLM / IA generativa
+18,Machine Learning
+18,Prompt engineering
+18,Python
+18,RAG
+19,APIs REST
+19,APIs de LLM (OpenAI/Anthropic/Gemini)
+19,Agentes de IA
+19,Azure
+19,CI/CD
+19,Git
+19,JavaScript/TypeScript
+19,LGPD / segurança
+19,LLM / IA generativa
+19,Prompt engineering
+19,RAG
+19,Spark / dbt / Airflow
+20,APIs REST
+20,APIs de LLM (OpenAI/Anthropic/Gemini)
+20,Agentes de IA
+20,Azure
+20,CI/CD
+20,Git
+20,JavaScript/TypeScript
+20,LGPD / segurança
+20,LLM / IA generativa
+20,Prompt engineering
+20,RAG
+20,Spark / dbt / Airflow
+21,APIs REST
+21,APIs de LLM (OpenAI/Anthropic/Gemini)
+21,AWS
+21,Agentes de IA
+21,Azure
+21,CI/CD
+21,Docker
+21,Embeddings / banco vetorial
+21,GCP
+21,Git
+21,LLM / IA generativa
+21,LangChain/LangGraph
+21,Prompt engineering
+21,RAG
+21,SQL
+21,Spark / dbt / Airflow
+22,APIs REST
+22,APIs de LLM (OpenAI/Anthropic/Gemini)
+22,AWS
+22,Avaliação de LLM
+22,Docker
+22,LGPD / segurança
+22,LLM / IA generativa
+22,LangChain/LangGraph
+22,Prompt engineering
+22,Python
+22,RAG
+22,Testes automatizados
+23,APIs REST
+23,AWS
+23,Agentes de IA
+23,Azure
+23,CI/CD
+23,GCP
+23,Inglês
+23,LLM / IA generativa
+23,Machine Learning
+23,Prompt engineering
+23,Python
+23,RAG
+24,APIs REST
+24,APIs de LLM (OpenAI/Anthropic/Gemini)
+24,AWS
+24,Agentes de IA
+24,Avaliação de LLM
+24,Azure
+24,CI/CD
+24,Docker
+24,Embeddings / banco vetorial
+24,GCP
+24,Git
+24,Inglês
+24,Kubernetes
+24,LGPD / segurança
+24,LLM / IA generativa
+24,LangChain/LangGraph
+24,MCP
+24,MLOps
+24,Prompt engineering
+24,Python
+24,RAG
+25,APIs REST
+25,Agentes de IA
+25,Azure
+25,CI/CD
+25,Inglês
+25,LLM / IA generativa
+25,LangChain/LangGraph
+25,MCP
+25,MLOps
+25,Python
+25,RPA / Power Automate
+25,Spark / dbt / Airflow
+26,APIs REST
+26,APIs de LLM (OpenAI/Anthropic/Gemini)
+26,Agentes de IA
+26,Avaliação de LLM
+26,Azure
+26,Embeddings / banco vetorial
+26,Inglês
+26,JavaScript/TypeScript
+26,LGPD / segurança
+26,LLM / IA generativa
+26,MCP
+26,Machine Learning
+26,Prompt engineering
+26,Python
+26,RAG
+26,RPA / Power Automate
+26,React
+27,APIs REST
+27,AWS
+27,CI/CD
+27,Git
+27,Inglês
+27,Java
+27,JavaScript/TypeScript
+27,LLM / IA generativa
+27,Métodos ágeis
+27,React
+27,Testes automatizados
+28,APIs REST
+28,APIs de LLM (OpenAI/Anthropic/Gemini)
+28,AWS
+28,CI/CD
+28,Deep Learning
+28,JavaScript/TypeScript
+28,LLM / IA generativa
+28,MLOps
+28,Machine Learning
+28,Métodos ágeis
+28,Python
+28,RAG
+29,APIs REST
+29,APIs de LLM (OpenAI/Anthropic/Gemini)
+29,AWS
+29,Avaliação de LLM
+29,Embeddings / banco vetorial
+29,GCP
+29,Git
+29,LGPD / segurança
+29,LLM / IA generativa
+29,LangChain/LangGraph
+29,MLOps
+29,Prompt engineering
+29,Python
+29,RAG
+29,Spark / dbt / Airflow
+29,Testes automatizados
+30,LLM / IA generativa
+30,Machine Learning
+30,Métodos ágeis
+30,Python
+30,SQL
+31,LLM / IA generativa
+31,Machine Learning
+31,Métodos ágeis
+31,Python
+31,SQL
+32,APIs REST
+32,APIs de LLM (OpenAI/Anthropic/Gemini)
+32,Agentes de IA
+32,Git
+32,JavaScript/TypeScript
+32,LLM / IA generativa
+32,MCP
+32,Prompt engineering
+32,SQL
+32,n8n / Make / Zapier
+33,APIs REST
+33,AWS
+33,Agentes de IA
+33,Avaliação de LLM
+33,Azure
+33,Embeddings / banco vetorial
+33,GCP
+33,LLM / IA generativa
+33,LangChain/LangGraph
+33,MLOps
+33,Prompt engineering
+33,Python
+33,RAG
+33,Spark / dbt / Airflow
+34,APIs REST
+34,APIs de LLM (OpenAI/Anthropic/Gemini)
+34,Avaliação de LLM
+34,Embeddings / banco vetorial
+34,LLM / IA generativa
+34,LangChain/LangGraph
+34,RAG
+35,LLM / IA generativa
+35,Machine Learning
+35,Métodos ágeis
+35,Python
+35,SQL
+36,APIs de LLM (OpenAI/Anthropic/Gemini)
+36,LLM / IA generativa
+36,Prompt engineering
+37,RPA / Power Automate
+38,Inglês
+39,Python
+39,RPA / Power Automate
+40,APIs REST
+40,Inglês
+40,Power BI / BI
+40,Python
+40,RPA / Power Automate
+40,SQL
+40,Spark / dbt / Airflow
+41,Power BI / BI
+41,RPA / Power Automate
+43,Python
+43,RPA / Power Automate
+44,SQL
+45,APIs REST
+45,APIs de LLM (OpenAI/Anthropic/Gemini)
+45,AWS
+45,Agentes de IA
+45,Azure
+45,C#/.NET
+45,GCP
+45,Git
+45,Inglês
+45,JavaScript/TypeScript
+45,LLM / IA generativa
+45,Prompt engineering
+45,Python
+45,RAG
+45,RPA / Power Automate
+45,SQL
+45,n8n / Make / Zapier
+50,Inglês
+53,APIs REST
+53,APIs de LLM (OpenAI/Anthropic/Gemini)
+53,Agentes de IA
+53,Azure
+53,C#/.NET
+53,Git
+53,JavaScript/TypeScript
+53,Prompt engineering
+53,Python
+53,RPA / Power Automate
+53,SQL
+55,APIs de LLM (OpenAI/Anthropic/Gemini)
+56,Agentes de IA
+56,Python
+57,Python
+57,RPA / Power Automate
+60,APIs REST
+60,RPA / Power Automate
+61,Inglês
+62,C#/.NET
+62,Python
+67,Python
+67,SQL
+74,Inglês
+76,APIs de LLM (OpenAI/Anthropic/Gemini)
+76,Git
+76,Inglês
+76,Java
+76,Machine Learning
+76,Python
+77,APIs REST
+77,Git
+77,Linux
+77,Python
+77,SQL
+77,Testes automatizados
+80,Power BI / BI
+81,APIs REST
+81,RPA / Power Automate
+82,APIs REST
+82,Agentes de IA
+82,LGPD / segurança
+82,Power BI / BI
+82,Prompt engineering
+83,Inglês
+84,Inglês
+84,LGPD / segurança
+84,Power BI / BI
+84,SQL
+87,Inglês
+89,Agentes de IA
+89,C#/.NET
+89,Inglês
+89,Java
+89,Machine Learning
+89,Python
+89,RPA / Power Automate
+90,Agentes de IA
+90,C#/.NET
+90,Inglês
+90,Java
+90,Machine Learning
+90,Python
+90,RPA / Power Automate
+91,Inglês
+93,Inglês
+94,APIs REST
+94,Agentes de IA
+94,JavaScript/TypeScript
+94,Python
+94,n8n / Make / Zapier
+95,APIs REST
+95,Agentes de IA
+95,Inglês
+95,Prompt engineering
+95,Python
+95,RPA / Power Automate
+95,n8n / Make / Zapier
+100,Inglês
+101,APIs REST
+101,Métodos ágeis
+101,RPA / Power Automate
+102,APIs REST
+102,Power BI / BI
+102,RPA / Power Automate
+102,SQL
+103,Power BI / BI
+103,Python
+103,SQL
+105,Inglês
+107,APIs REST
+108,Inglês
+108,Machine Learning
+114,Inglês
+115,APIs REST
+115,APIs de LLM (OpenAI/Anthropic/Gemini)
+115,Power BI / BI
+115,RPA / Power Automate
+115,n8n / Make / Zapier
+117,Power BI / BI
+117,Python
+118,Inglês
+118,JavaScript/TypeScript
+119,C#/.NET
+119,SQL
+120,APIs REST
+120,Git
+120,JavaScript/TypeScript
+120,Python
+120,SQL
+121,APIs REST
+121,APIs de LLM (OpenAI/Anthropic/Gemini)
+121,JavaScript/TypeScript
+121,n8n / Make / Zapier
+122,AWS
+122,Java
+122,JavaScript/TypeScript
+122,Métodos ágeis
+122,React
+123,APIs REST
+123,Azure
+123,C#/.NET
+123,Git
+123,JavaScript/TypeScript
+123,LGPD / segurança
+123,Métodos ágeis
+123,Python
+123,RPA / Power Automate
+123,SQL
+123,Testes automatizados
+124,APIs REST
+124,AWS
+124,CI/CD
+124,Embeddings / banco vetorial
+124,Git
+124,LLM / IA generativa
+124,LangChain/LangGraph
+124,Métodos ágeis
+124,Python
+124,RAG
+124,React
+124,Testes automatizados
+125,AWS
+125,CI/CD
+125,Git
+125,Java
+125,Python
+125,Testes automatizados
+126,APIs REST
+126,Agentes de IA
+126,CI/CD
+126,Docker
+126,Git
+126,Inglês
+126,Kubernetes
+126,Python
+126,RPA / Power Automate
+126,SQL
+126,Spark / dbt / Airflow
+127,AWS
+127,Azure
+127,Python
+127,SQL
+128,Agentes de IA
+128,Git
+128,Inglês
+128,Pandas / NumPy
+128,Python
+128,SQL
+128,Spark / dbt / Airflow
+129,APIs REST
+129,AWS
+129,Azure
+129,C#/.NET
+129,CI/CD
+129,GCP
+129,Inglês
+129,Java
+129,JavaScript/TypeScript
+129,Prompt engineering
+129,Python
+129,SQL
+129,Testes automatizados
+130,APIs REST
+130,AWS
+130,Azure
+130,CI/CD
+130,Docker
+130,Git
+130,Java
+130,JavaScript/TypeScript
+130,Python
+130,SQL
+130,Testes automatizados
+131,APIs REST
+131,AWS
+131,CI/CD
+131,Docker
+131,Git
+131,Kubernetes
+131,Linux
+131,Python
+131,SQL
+132,APIs REST
+132,Azure
+132,CI/CD
+132,Git
+132,Inglês
+132,JavaScript/TypeScript
+132,Python
+132,SQL
+132,Spark / dbt / Airflow
+133,APIs REST
+133,Docker
+133,Git
+133,Python
+134,AWS
+134,Azure
+134,CI/CD
+134,Git
+134,Python
+134,SQL
+134,Spark / dbt / Airflow
+135,APIs REST
+135,AWS
+135,Python
+135,SQL
+135,Spark / dbt / Airflow
+136,AWS
+136,Spark / dbt / Airflow
+137,CI/CD
+137,GCP
+137,Python
+137,SQL
+137,Spark / dbt / Airflow
+138,CI/CD
+138,Kubernetes
+138,Python
+138,SQL
+139,AWS
+139,Azure
+139,CI/CD
+139,GCP
+139,Git
+139,Python
+139,SQL
+139,Spark / dbt / Airflow
+140,APIs REST
+140,Azure
+140,CI/CD
+140,GCP
+140,Git
+140,Inglês
+140,LGPD / segurança
+140,Machine Learning
+140,Métodos ágeis
+140,Python
+140,SQL
+140,Spark / dbt / Airflow
+140,Testes automatizados
+141,APIs REST
+141,Azure
+141,CI/CD
+141,Git
+141,LGPD / segurança
+141,MLOps
+141,Machine Learning
+141,Power BI / BI
+141,SQL
+141,Spark / dbt / Airflow
+142,CI/CD
+142,Python
+142,SQL
+142,Spark / dbt / Airflow
+143,AWS
+143,Azure
+143,Machine Learning
+143,Spark / dbt / Airflow
+144,AWS
+144,Python
+144,SQL
+144,Spark / dbt / Airflow
+145,AWS
+145,Azure
+145,CI/CD
+145,GCP
+145,Power BI / BI
+145,Python
+145,SQL
+145,Spark / dbt / Airflow
+146,AWS
+146,Azure
+146,CI/CD
+146,GCP
+146,Git
+146,Python
+146,SQL
+146,Spark / dbt / Airflow
+147,Deep Learning
+147,Docker
+147,GCP
+147,Kubernetes
+147,Python
+148,APIs REST
+148,AWS
+148,Azure
+148,CI/CD
+148,GCP
+148,Git
+148,Python
+148,SQL
+148,Spark / dbt / Airflow
+149,APIs REST
+149,AWS
+149,Azure
+149,CI/CD
+149,Inglês
+149,Python
+149,SQL
+149,Spark / dbt / Airflow
+150,AWS
+150,Python
+151,Git
+151,LGPD / segurança
+151,Python
+151,SQL
+151,Spark / dbt / Airflow
+152,APIs REST
+152,AWS
+152,Git
+152,Python
+152,SQL
+152,Spark / dbt / Airflow
+152,Testes automatizados
+153,APIs REST
+153,AWS
+153,CI/CD
+153,Git
+153,Inglês
+153,Python
+153,SQL
+153,Spark / dbt / Airflow
+154,APIs REST
+154,GCP
+154,Git
+154,Inglês
+154,Power BI / BI
+154,Python
+154,Spark / dbt / Airflow
+155,APIs REST
+155,AWS
+155,Azure
+155,CI/CD
+155,Embeddings / banco vetorial
+155,GCP
+155,Git
+155,LGPD / segurança
+155,MLOps
+155,Python
+155,RAG
+155,SQL
+155,Spark / dbt / Airflow
+156,CI/CD
+156,Git
+156,Inglês
+156,Python
+156,SQL
+157,APIs de LLM (OpenAI/Anthropic/Gemini)
+157,AWS
+157,Agentes de IA
+157,CI/CD
+157,LLM / IA generativa
+157,Python
+157,SQL
+158,AWS
+158,Azure
+158,GCP
+158,SQL
+158,Spark / dbt / Airflow
+159,AWS
+159,Azure
+159,GCP
+159,Git
+159,Python
+159,SQL
+159,Spark / dbt / Airflow
+160,AWS
+160,Agentes de IA
+160,Azure
+160,CI/CD
+160,GCP
+160,Inglês
+160,LLM / IA generativa
+160,MLOps
+160,Machine Learning
+160,Python
+160,SQL
+160,Spark / dbt / Airflow
+161,AWS
+161,CI/CD
+161,Git
+161,Inglês
+161,Python
+161,SQL
+161,Spark / dbt / Airflow
+161,Testes automatizados
+162,APIs REST
+162,AWS
+162,Azure
+162,GCP
+162,Git
+162,LGPD / segurança
+162,Power BI / BI
+162,Python
+162,SQL
+162,Spark / dbt / Airflow
+163,APIs REST
+163,Azure
+163,CI/CD
+163,Git
+163,Power BI / BI
+163,Python
+163,SQL
+163,Spark / dbt / Airflow
+164,AWS
+164,Azure
+164,CI/CD
+164,Python
+164,SQL
+164,Spark / dbt / Airflow
+165,APIs REST
+165,CI/CD
+165,Git
+165,Power BI / BI
+165,Python
+165,SQL
+166,AWS
+166,Azure
+166,CI/CD
+166,Git
+166,Python
+166,SQL
+166,Spark / dbt / Airflow
+167,AWS
+167,Azure
+167,CI/CD
+167,Docker
+167,GCP
+167,Git
+167,Kubernetes
+167,LGPD / segurança
+167,MLOps
+167,Power BI / BI
+167,Python
+167,SQL
+167,Spark / dbt / Airflow
+168,APIs REST
+168,CI/CD
+168,Docker
+168,Python
+168,SQL
+168,Spark / dbt / Airflow
+169,APIs REST
+169,Git
+169,Python
+169,SQL
+169,Spark / dbt / Airflow
+169,Testes automatizados
+170,APIs REST
+170,CI/CD
+170,GCP
+170,Power BI / BI
+170,SQL
+170,Spark / dbt / Airflow
+171,GCP
+171,Power BI / BI
+171,Python
+171,SQL
+172,GCP
+172,Inglês
+172,Power BI / BI
+172,SQL
+173,Pandas / NumPy
+173,Power BI / BI
+173,Python
+173,SQL
+174,CI/CD
+174,Git
+174,Métodos ágeis
+174,Power BI / BI
+174,Python
+174,SQL
+174,Spark / dbt / Airflow
+175,Power BI / BI
+175,Python
+175,RPA / Power Automate
+175,SQL
+176,LGPD / segurança
+176,Power BI / BI
+176,Python
+176,SQL
+177,AWS
+177,GCP
+177,Git
+177,LGPD / segurança
+177,Python
+178,CI/CD
+178,Git
+178,Métodos ágeis
+178,Power BI / BI
+178,Python
+178,SQL
+178,Spark / dbt / Airflow
+179,Power BI / BI
+179,SQL
+180,AWS
+180,Deep Learning
+180,Embeddings / banco vetorial
+180,MLOps
+180,Machine Learning
+180,Python
+181,APIs de LLM (OpenAI/Anthropic/Gemini)
+181,AWS
+181,Agentes de IA
+181,Deep Learning
+181,Docker
+181,Java
+181,LLM / IA generativa
+181,MLOps
+181,Machine Learning
+181,Python
+182,AWS
+182,Deep Learning
+182,Docker
+182,Git
+182,MLOps
+182,Machine Learning
+182,Pandas / NumPy
+182,Python
+183,APIs REST
+183,APIs de LLM (OpenAI/Anthropic/Gemini)
+183,Docker
+183,LLM / IA generativa
+183,MLOps
+183,Machine Learning
+183,Python
+184,APIs REST
+184,AWS
+184,Azure
+184,CI/CD
+184,Embeddings / banco vetorial
+184,Kubernetes
+184,MLOps
+184,Machine Learning
+184,Python
+184,SQL
+184,Spark / dbt / Airflow
+185,AWS
+185,Deep Learning
+185,Git
+185,MLOps
+185,Machine Learning
+185,Métodos ágeis
+185,Pandas / NumPy
+185,Power BI / BI
+185,Python
+185,SQL
+185,Spark / dbt / Airflow
+186,Machine Learning
+186,Python
+186,SQL
+186,Spark / dbt / Airflow
+187,RPA / Power Automate
+188,APIs REST
+188,C#/.NET
+188,CI/CD
+188,Git
+188,LGPD / segurança
+188,RPA / Power Automate
+188,SQL
+188,Testes automatizados
+189,RPA / Power Automate
+190,APIs REST
+190,Azure
+190,C#/.NET
+190,CI/CD
+190,Git
+190,JavaScript/TypeScript
+190,LGPD / segurança
+190,Métodos ágeis
+190,Power BI / BI
+190,Python
+190,RPA / Power Automate
+190,SQL
+191,APIs REST
+191,Métodos ágeis
+191,Python
+191,RPA / Power Automate
+191,SQL
+192,APIs REST
+192,C#/.NET
+192,Git
+192,Métodos ágeis
+192,RPA / Power Automate
+192,SQL
+193,APIs REST
+193,Azure
+193,CI/CD
+193,Git
+193,Python
+193,RPA / Power Automate
+193,Testes automatizados
+194,APIs REST
+194,CI/CD
+194,Git
+194,Métodos ágeis
+194,RPA / Power Automate
+194,Testes automatizados
+195,APIs REST
+195,RPA / Power Automate
+196,APIs REST
+196,C#/.NET
+196,Java
+196,SQL
+197,APIs REST
+197,AWS
+197,Azure
+197,CI/CD
+197,Docker
+197,GCP
+197,Git
+197,Java
+197,JavaScript/TypeScript
+197,Kubernetes
+197,Métodos ágeis
+197,SQL
+197,Testes automatizados
+198,APIs REST
+198,Azure
+198,C#/.NET
+198,CI/CD
+198,Docker
+198,Git
+198,SQL
+198,Testes automatizados
+199,APIs REST
+199,AWS
+199,Java
+199,Testes automatizados
+200,APIs REST
+200,APIs de LLM (OpenAI/Anthropic/Gemini)
+200,AWS
+200,Docker
+200,Inglês
+200,LLM / IA generativa
+201,APIs REST
+201,C#/.NET
+201,Docker
+201,Git
+201,Java
+201,JavaScript/TypeScript
+201,Kubernetes
+201,Métodos ágeis
+201,Python
+201,React
+201,SQL
+201,Testes automatizados
+202,APIs REST
+202,AWS
+202,Inglês
+202,Java
+202,Kubernetes
+203,APIs REST
+203,AWS
+203,Azure
+203,CI/CD
+203,Docker
+203,GCP
+203,Git
+203,Java
+203,Kubernetes
+203,Métodos ágeis
+203,SQL
+203,Testes automatizados
+204,APIs REST
+204,Git
+204,Inglês
+204,Java
+205,APIs REST
+205,AWS
+205,Azure
+205,CI/CD
+205,Docker
+205,GCP
+205,Git
+205,Inglês
+205,Java
+205,JavaScript/TypeScript
+205,Kubernetes
+205,Métodos ágeis
+205,Python
+206,AWS
+206,Azure
+206,C#/.NET
+206,Git
+206,Inglês
+206,JavaScript/TypeScript
+206,Python
+206,SQL
+206,Testes automatizados
+207,APIs REST
+207,APIs de LLM (OpenAI/Anthropic/Gemini)
+207,Agentes de IA
+207,Docker
+207,Git
+207,Inglês
+207,Java
+207,JavaScript/TypeScript
+207,Kubernetes
+207,LLM / IA generativa
+207,LangChain/LangGraph
+207,MCP
+207,Prompt engineering
+207,Python
+207,RAG
+207,Testes automatizados
+208,APIs REST
+208,APIs de LLM (OpenAI/Anthropic/Gemini)
+208,AWS
+208,Docker
+208,Inglês
+208,LLM / IA generativa
+209,APIs REST
+209,APIs de LLM (OpenAI/Anthropic/Gemini)
+209,AWS
+209,CI/CD
+209,Git
+209,Java
+209,Métodos ágeis
+209,Testes automatizados
+210,APIs REST
+210,APIs de LLM (OpenAI/Anthropic/Gemini)
+210,LLM / IA generativa
+210,Prompt engineering
+210,SQL
+211,APIs REST
+211,Azure
+211,CI/CD
+211,Docker
+211,Git
+211,Linux
+211,Python
+211,SQL
+212,APIs REST
+212,AWS
+212,Azure
+212,CI/CD
+212,Docker
+212,GCP
+212,Git
+212,Java
+212,Kubernetes
+212,Métodos ágeis
+212,SQL
+212,Testes automatizados
+213,APIs REST
+213,AWS
+213,Azure
+213,CI/CD
+213,Docker
+213,GCP
+213,Git
+213,Java
+213,Kubernetes
+213,Métodos ágeis
+213,SQL
+213,Testes automatizados
+214,APIs REST
+214,AWS
+214,Azure
+214,C#/.NET
+214,CI/CD
+214,Docker
+214,GCP
+214,Git
+214,Inglês
+214,Kubernetes
+214,Métodos ágeis
+214,SQL
+214,Testes automatizados
