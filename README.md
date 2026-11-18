@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/arthurpenedo/sql-do-zero-br/actions/workflows/ci.yml/badge.svg)
 
-20 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
+30 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
 
 ## O problema
 
@@ -12,8 +12,10 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ## O que faz
 
-- 20 exercícios em 4 níveis: **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
-  **junção** (JOIN, LEFT JOIN) e **avançado** (CASE, CTE, funções de janela).
+- 30 exercícios em 6 níveis: **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
+  **junção** (JOIN, LEFT JOIN), **avançado** (CASE, CTE, funções de janela), **datas** (intervalos,
+  `strftime`, média móvel) e **subconsultas** (IN, EXISTS, correlacionadas).
+- Página estática com os enunciados e o gabarito escondido (`sql-do-zero demo`), publicada pelo `pagina.yml`.
 - Duas tabelas: `vagas` (214 linhas) e `vaga_skill` (uma linha por vaga e skill), dados públicos do radar em 19/10/2026.
 - Corretor: roda a sua consulta e o gabarito, compara colunas, linhas e valores e diz **onde** diferiu.
   Se o exercício não pede ordem, a ordem das linhas não conta.
@@ -23,16 +25,17 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ```bash
 pip install -e ".[dev]"
-sql-do-zero listar            # os 20 exercícios
+sql-do-zero listar            # os 30 exercícios
 sql-do-zero ver 6             # enunciado e dica
 sql-do-zero corrigir 6 minha.sql
 sql-do-zero gabarito 6        # só depois de tentar
-sql-do-zero medir             # confere que os 20 gabaritos se corrigem sozinhos
+sql-do-zero medir             # confere que os 30 gabaritos se corrigem sozinhos
+sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)
 ```
 
 ## Números medidos
 
-- 20/20 gabaritos corrigem como corretos (`sql-do-zero medir`); 32 testes passando, rodando no CI (Python 3.11 e 3.13).
+- 30/30 gabaritos corrigem como corretos (`sql-do-zero medir`); 45 testes passando, rodando no CI (Python 3.11 e 3.13).
 - Dados: 214 vagas, 129 empresas, 69 remotas (32,2%).
 
 ## Limites
