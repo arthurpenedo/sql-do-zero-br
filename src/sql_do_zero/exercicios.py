@@ -1,4 +1,4 @@
-"""Os 20 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 30 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -122,4 +122,62 @@ EXERCICIOS: list[Exercicio] = [
               "WITH d AS (SELECT publicada, COUNT(*) AS total FROM vagas GROUP BY publicada) "
               "SELECT publicada, total, CAST(SUM(total) OVER (ORDER BY publicada) AS BIGINT) AS acumulado "
               "FROM d ORDER BY publicada", True),
+    Exercicio(21, "datas", "Última semana",
+              "Quantas vagas foram publicadas nos 7 dias que terminam na data mais recente da tabela "
+              "(inclusive)? Uma coluna.",
+              "MAX(publicada) - INTERVAL 6 DAY",
+              "SELECT COUNT(*) FROM vagas WHERE publicada >= (SELECT MAX(publicada) FROM vagas) - INTERVAL 6 DAY"),
+    Exercicio(22, "datas", "Vagas por mês",
+              "Quantas vagas por mês? Colunas: `mes` (texto AAAA-MM) e `total`, em ordem de mês.",
+              "strftime(publicada, '%Y-%m')",
+              "SELECT strftime(publicada, '%Y-%m') AS mes, COUNT(*) AS total FROM vagas "
+              "GROUP BY mes ORDER BY mes", True),
+    Exercicio(23, "datas", "Dia da semana mais cheio",
+              "Em qual dia da semana (nome em inglês, como `dayname` devolve) saem mais vagas? "
+              "Colunas: `dia` e `total`. Uma linha; se empatar, o primeiro em ordem alfabética.",
+              "dayname(publicada), ORDER BY total DESC, dia LIMIT 1",
+              "SELECT dayname(publicada) AS dia, COUNT(*) AS total FROM vagas "
+              "GROUP BY dia ORDER BY total DESC, dia LIMIT 1", True),
+    Exercicio(24, "datas", "Vagas do primeiro dia",
+              "Liste `titulo` das vagas publicadas na data mais antiga da tabela, em ordem alfabética.",
+              "subconsulta com MIN(publicada)",
+              "SELECT titulo FROM vagas WHERE publicada = (SELECT MIN(publicada) FROM vagas) "
+              "ORDER BY titulo", True),
+    Exercicio(25, "subconsultas", "Empresas acima da média",
+              "Quais empresas têm mais vagas que a média de vagas por empresa? Colunas: `empresa`, "
+              "`total`; mais vagas primeiro, empate por nome.",
+              "HAVING COUNT(*) > (SELECT AVG(n) FROM (...))",
+              "SELECT empresa, COUNT(*) AS total FROM vagas GROUP BY empresa "
+              "HAVING COUNT(*) > (SELECT AVG(n) FROM (SELECT COUNT(*) AS n FROM vagas GROUP BY empresa)) "
+              "ORDER BY total DESC, empresa", True),
+    Exercicio(26, "subconsultas", "Vagas sem skill",
+              "Quantas vagas não têm nenhuma linha em `vaga_skill`? Uma coluna.",
+              "NOT IN (SELECT id FROM vaga_skill)",
+              "SELECT COUNT(*) FROM vagas WHERE id NOT IN (SELECT id FROM vaga_skill)"),
+    Exercicio(27, "subconsultas", "Mais skills que a média",
+              "Liste `titulo` e `empresa` das vagas com mais skills que a média de skills por vaga "
+              "(considere só vagas que têm skill).",
+              "subconsulta correlacionada e outra com COUNT(*) / COUNT(DISTINCT id)",
+              "SELECT titulo, empresa FROM vagas v WHERE (SELECT COUNT(*) FROM vaga_skill s WHERE s.id = v.id) "
+              "> (SELECT COUNT(*) * 1.0 / COUNT(DISTINCT id) FROM vaga_skill)"),
+    Exercicio(28, "subconsultas", "Top 3 skills das vagas remotas",
+              "As 3 skills mais pedidas nas vagas remotas. Colunas: `skill`, `total`; maior primeiro, "
+              "empate por nome.",
+              "WHERE id IN (SELECT id FROM vagas WHERE ...)",
+              "SELECT skill, COUNT(*) AS total FROM vaga_skill "
+              "WHERE id IN (SELECT id FROM vagas WHERE modelo = 'remoto') "
+              "GROUP BY skill ORDER BY total DESC, skill LIMIT 3", True),
+    Exercicio(29, "subconsultas", "SQL sem Python",
+              "Quantas vagas pedem SQL mas **não** pedem Python? Uma coluna.",
+              "EXISTS e NOT EXISTS",
+              "SELECT COUNT(*) FROM vagas v WHERE EXISTS (SELECT 1 FROM vaga_skill s "
+              "WHERE s.id = v.id AND s.skill = 'SQL') AND NOT EXISTS (SELECT 1 FROM vaga_skill s "
+              "WHERE s.id = v.id AND s.skill = 'Python')"),
+    Exercicio(30, "datas", "Média móvel de 3 dias",
+              "Vagas por dia e a média das últimas 3 datas (a atual e as 2 anteriores), com 1 casa "
+              "decimal. Colunas: `publicada`, `total`, `media3`, em ordem de data.",
+              "AVG(total) OVER (ORDER BY publicada ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)",
+              "WITH d AS (SELECT publicada, COUNT(*) AS total FROM vagas GROUP BY publicada) "
+              "SELECT publicada, total, ROUND(AVG(total) OVER (ORDER BY publicada "
+              "ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 1) AS media3 FROM d ORDER BY publicada", True),
 ]
