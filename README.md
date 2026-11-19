@@ -28,6 +28,8 @@ pip install -e ".[dev]"
 sql-do-zero listar            # os 30 exercícios
 sql-do-zero ver 6             # enunciado e dica
 sql-do-zero corrigir 6 minha.sql
+# corrige uma pasta inteira (arquivos 01.sql, 7-top.sql...) e conta as tentativas
+sql-do-zero corrigir --todos respostas/ --tentativas progresso.json
 sql-do-zero gabarito 6        # só depois de tentar
 sql-do-zero medir             # confere que os 30 gabaritos se corrigem sozinhos
 sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)

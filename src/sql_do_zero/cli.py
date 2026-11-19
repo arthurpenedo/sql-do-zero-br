@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .corretor import buscar, conectar, corrigir
 from .exercicios import EXERCICIOS
+from .lote import corrigir_pasta, registrar
 from .pagina import gerar_pagina
 
 
@@ -16,8 +17,10 @@ def main(argv: list[str] | None = None) -> int:
     ver = sub.add_parser("ver", help="mostra o enunciado")
     ver.add_argument("numero", type=int)
     cor = sub.add_parser("corrigir", help="corrige o arquivo .sql do aluno")
-    cor.add_argument("numero", type=int)
-    cor.add_argument("arquivo", type=Path)
+    cor.add_argument("numero", type=int, nargs="?")
+    cor.add_argument("arquivo", type=Path, nargs="?")
+    cor.add_argument("--todos", type=Path, metavar="PASTA", help="corrige todos os NN*.sql da pasta")
+    cor.add_argument("--tentativas", type=Path, metavar="JSON", help="guarda as tentativas por exercício")
     gab = sub.add_parser("gabarito", help="mostra a consulta do gabarito")
     gab.add_argument("numero", type=int)
     sub.add_parser("medir", help="roda todos os gabaritos e confere que se corrigem sozinhos")
@@ -39,6 +42,21 @@ def main(argv: list[str] | None = None) -> int:
         ok = sum(corrigir(con, ex, ex.gabarito).ok for ex in EXERCICIOS)
         print(f"{ok}/{len(EXERCICIOS)} gabaritos corrigem como corretos")
         return 0 if ok == len(EXERCICIOS) else 1
+    if a.cmd == "corrigir" and a.todos:
+        if not a.todos.is_dir():
+            print(f"Pasta não encontrada: {a.todos}", file=sys.stderr)
+            return 2
+        res = corrigir_pasta(conectar(), a.todos)
+        for numero, ok, msg in res:
+            print(f"{numero:2d}  {'ok  ' if ok else 'erro'}  {msg}")
+            if a.tentativas and any(e.numero == numero for e in EXERCICIOS):
+                registrar(a.tentativas, numero, ok)
+        certos = sum(ok for _, ok, _ in res)
+        print(f"{certos}/{len(res)} corretos")
+        return 0 if res and certos == len(res) else 1
+    if a.numero is None:
+        print("Informe o número do exercício (ou use --todos PASTA).", file=sys.stderr)
+        return 2
     try:
         ex = buscar(a.numero)
     except KeyError as e:
@@ -49,10 +67,12 @@ def main(argv: list[str] | None = None) -> int:
     elif a.cmd == "gabarito":
         print(ex.gabarito)
     else:
-        if not a.arquivo.is_file():
+        if a.arquivo is None or not a.arquivo.is_file():
             print(f"Arquivo não encontrado: {a.arquivo}", file=sys.stderr)
             return 2
         r = corrigir(conectar(), ex, a.arquivo.read_text(encoding="utf-8"))
         print(r.mensagem)
+        if a.tentativas:
+            registrar(a.tentativas, ex.numero, r.ok)
         return 0 if r.ok else 1
     return 0
