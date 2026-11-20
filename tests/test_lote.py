@@ -3,7 +3,40 @@ import json
 from sql_do_zero.cli import main
 from sql_do_zero.corretor import conectar
 from sql_do_zero.exercicios import EXERCICIOS
-from sql_do_zero.lote import achar_arquivos, corrigir_pasta, registrar
+from sql_do_zero.lote import (
+    achar_arquivos,
+    carregar,
+    corrigir_pasta,
+    registrar,
+    resumo_progresso,
+)
+
+
+def test_resumo_progresso_conta_acertos_e_media():
+    dados = {"1": {"tentativas": 2, "acertou_em": 2}, "2": {"tentativas": 3, "acertou_em": None},
+             "3": {"tentativas": 1, "acertou_em": 1}}
+    r = resumo_progresso(dados, {1: "básico", 2: "básico", 3: "agrupar", 4: "agrupar"})
+    assert r["acertados"] == [1, 3]
+    assert r["pendentes"] == [2, 4]
+    assert r["media_tentativas"] == 1.5
+    assert r["por_nivel"] == {"básico": [2, 1], "agrupar": [2, 1]}
+
+
+def test_resumo_progresso_vazio_e_json_quebrado(tmp_path):
+    assert carregar(tmp_path / "nao-existe.json") == {}
+    quebrado = tmp_path / "q.json"
+    quebrado.write_text("{nao é json", encoding="utf-8")
+    assert carregar(quebrado) == {}
+    assert resumo_progresso({}, {1: "básico"})["media_tentativas"] is None
+
+
+def test_cli_progresso(tmp_path, capsys):
+    arq = tmp_path / "p.json"
+    arq.write_text('{"1": {"tentativas": 1, "acertou_em": 1}}', encoding="utf-8")
+    assert main(["progresso", str(arq)]) == 0
+    saida = capsys.readouterr().out
+    assert "1/40 exercícios resolvidos" in saida and "Próximo a tentar: 2" in saida
+    assert main(["progresso", str(tmp_path / "x.json")]) == 2
 
 
 def test_achar_arquivos_por_prefixo(tmp_path):

@@ -48,3 +48,33 @@ def registrar(arquivo: Path, numero: int, ok: bool) -> dict:
             reg["acertou_em"] = reg["tentativas"]
     arquivo.write_text(json.dumps(dados, ensure_ascii=False, indent=2), encoding="utf-8")
     return dados
+
+
+def carregar(arquivo: Path) -> dict:
+    """Lê o JSON de tentativas; arquivo ausente ou quebrado vira dicionário vazio."""
+    if not arquivo.is_file():
+        return {}
+    try:
+        dados = json.loads(arquivo.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    return dados if isinstance(dados, dict) else {}
+
+
+def resumo_progresso(dados: dict, niveis: dict[int, str]) -> dict:
+    """Resume o progresso: acertados, pendentes, média de tentativas e acertos por nível.
+
+    `niveis` mapeia número do exercício -> nível; números fora dele são ignorados.
+    """
+    acertados, pendentes, tentativas_acerto = [], [], []
+    por_nivel: dict[str, list[int]] = {}
+    for numero, nivel in sorted(niveis.items()):
+        reg = dados.get(str(numero))
+        feito = isinstance(reg, dict) and reg.get("acertou_em") is not None
+        (acertados if feito else pendentes).append(numero)
+        total, ok = por_nivel.get(nivel, [0, 0])
+        por_nivel[nivel] = [total + 1, ok + feito]
+        if feito:
+            tentativas_acerto.append(reg["acertou_em"])
+    media = round(sum(tentativas_acerto) / len(tentativas_acerto), 1) if tentativas_acerto else None
+    return {"acertados": acertados, "pendentes": pendentes, "media_tentativas": media, "por_nivel": por_nivel}

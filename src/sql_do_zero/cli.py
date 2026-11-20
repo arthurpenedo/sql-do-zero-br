@@ -6,12 +6,12 @@ from pathlib import Path
 
 from .corretor import buscar, conectar, corrigir
 from .exercicios import EXERCICIOS
-from .lote import corrigir_pasta, registrar
+from .lote import carregar, corrigir_pasta, registrar, resumo_progresso
 from .pagina import gerar_pagina
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="sql-do-zero", description="30 exercícios de SQL com correção automática")
+    p = argparse.ArgumentParser(prog="sql-do-zero", description="40 exercícios de SQL com correção automática")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("listar", help="lista os exercícios")
     ver = sub.add_parser("ver", help="mostra o enunciado")
@@ -23,7 +23,9 @@ def main(argv: list[str] | None = None) -> int:
     cor.add_argument("--tentativas", type=Path, metavar="JSON", help="guarda as tentativas por exercício")
     gab = sub.add_parser("gabarito", help="mostra a consulta do gabarito")
     gab.add_argument("numero", type=int)
-    sub.add_parser("medir", help="roda todos os gabaritos e confere que se corrigem sozinhos")
+    pro = sub.add_parser("progresso", help="resume o JSON de --tentativas: acertos, pendentes e média")
+    pro.add_argument("arquivo", type=Path)
+    sub.add_parser("medir",help="roda todos os gabaritos e confere que se corrigem sozinhos")
     dem = sub.add_parser("demo", help="gera a página HTML com os enunciados (gabarito escondido)")
     dem.add_argument("--saida", type=Path, default=Path("site/index.html"))
     a = p.parse_args(argv)
@@ -36,6 +38,19 @@ def main(argv: list[str] | None = None) -> int:
         a.saida.parent.mkdir(parents=True, exist_ok=True)
         a.saida.write_text(gerar_pagina(), encoding="utf-8")
         print(f"Página gerada em {a.saida}")
+        return 0
+    if a.cmd == "progresso":
+        if not a.arquivo.is_file():
+            print(f"Arquivo não encontrado: {a.arquivo}", file=sys.stderr)
+            return 2
+        r = resumo_progresso(carregar(a.arquivo), {e.numero: e.nivel for e in EXERCICIOS})
+        print(f"{len(r['acertados'])}/{len(EXERCICIOS)} exercícios resolvidos")
+        for nivel, (total, ok) in r["por_nivel"].items():
+            print(f"  {nivel:13s} {ok}/{total}")
+        if r["media_tentativas"] is not None:
+            print(f"Média de tentativas até acertar: {r['media_tentativas']}")
+        if r["pendentes"]:
+            print("Próximo a tentar: " + ", ".join(map(str, r["pendentes"][:5])))
         return 0
     if a.cmd == "medir":
         con = conectar()
