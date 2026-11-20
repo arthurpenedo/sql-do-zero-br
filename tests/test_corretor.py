@@ -10,8 +10,8 @@ def con():
     return conectar()
 
 
-def test_tem_30_exercicios_numerados():
-    assert [e.numero for e in EXERCICIOS] == list(range(1, 31))
+def test_tem_40_exercicios_numerados():
+    assert [e.numero for e in EXERCICIOS] == list(range(1, 41))
 
 
 @pytest.mark.parametrize("ex", EXERCICIOS, ids=lambda e: "ex" + str(e.numero))

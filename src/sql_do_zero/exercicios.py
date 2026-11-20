@@ -1,4 +1,4 @@
-"""Os 30 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 40 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -180,4 +180,60 @@ EXERCICIOS: list[Exercicio] = [
               "WITH d AS (SELECT publicada, COUNT(*) AS total FROM vagas GROUP BY publicada) "
               "SELECT publicada, total, ROUND(AVG(total) OVER (ORDER BY publicada "
               "ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 1) AS media3 FROM d ORDER BY publicada", True),
+    Exercicio(31, "agrupar", "Vagas por nível",
+              "Quantas vagas há em cada `nivel`? Colunas: `nivel`, `total`; mais vagas primeiro, empate por nível.",
+              "GROUP BY nivel",
+              "SELECT nivel, COUNT(*) AS total FROM vagas GROUP BY nivel ORDER BY total DESC, nivel", True),
+    Exercicio(32, "agrupar", "Skills de vagas júnior",
+              "As 5 skills mais pedidas nas vagas de nível 'júnior/trainee'. Colunas: `skill`, `total`; "
+              "maior primeiro, empate por nome.",
+              "JOIN entre vagas e vaga_skill, filtrando nivel",
+              "SELECT s.skill, COUNT(*) AS total FROM vaga_skill s JOIN vagas v ON v.id = s.id "
+              "WHERE v.nivel = 'júnior/trainee' GROUP BY s.skill ORDER BY total DESC, s.skill LIMIT 5", True),
+    Exercicio(33, "junção", "Vagas sem nenhuma skill",
+              "Liste `titulo` das vagas que não têm linha em `vaga_skill`, em ordem alfabética. Use LEFT JOIN.",
+              "LEFT JOIN ... WHERE s.id IS NULL",
+              "SELECT v.titulo FROM vagas v LEFT JOIN vaga_skill s ON s.id = v.id "
+              "WHERE s.id IS NULL ORDER BY v.titulo", True),
+    Exercicio(34, "avançado", "Percentual de remotas",
+              "Qual a porcentagem de vagas remotas, com 1 casa decimal? Uma coluna chamada `pct`.",
+              "AVG(CASE WHEN ... THEN 1.0 ELSE 0 END) * 100",
+              "SELECT ROUND(AVG(CASE WHEN modelo = 'remoto' THEN 1.0 ELSE 0 END) * 100, 1) AS pct FROM vagas"),
+    Exercicio(35, "avançado", "Ranking de empresas",
+              "Posição de cada empresa por número de vagas (empates com a mesma posição, sem pular números). "
+              "Colunas: `empresa`, `total`, `posicao`; ordem por posição e nome. Só as 10 primeiras linhas.",
+              "DENSE_RANK() OVER (ORDER BY COUNT(*) DESC)",
+              "SELECT empresa, COUNT(*) AS total, DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS posicao "
+              "FROM vagas GROUP BY empresa ORDER BY posicao, empresa LIMIT 10", True),
+    Exercicio(36, "avançado", "Skill mais pedida por modelo",
+              "Para cada `modelo` (remoto, híbrido, presencial), a skill mais pedida. Colunas: `modelo`, "
+              "`skill`, `total`; ordem por modelo. Empate: vence a skill de menor nome.",
+              "ROW_NUMBER() OVER (PARTITION BY modelo ORDER BY total DESC, skill)",
+              "WITH c AS (SELECT v.modelo, s.skill, COUNT(*) AS total FROM vagas v JOIN vaga_skill s "
+              "ON s.id = v.id GROUP BY v.modelo, s.skill), r AS (SELECT *, ROW_NUMBER() OVER "
+              "(PARTITION BY modelo ORDER BY total DESC, skill) AS n FROM c) "
+              "SELECT modelo, skill, total FROM r WHERE n = 1 ORDER BY modelo", True),
+    Exercicio(37, "datas", "Vagas por semana",
+              "Quantas vagas por semana (`strftime(publicada, '%Y-%W')`)? Colunas: `semana`, `total`, "
+              "em ordem de semana.",
+              "strftime(publicada, '%Y-%W')",
+              "SELECT strftime(publicada, '%Y-%W') AS semana, COUNT(*) AS total "
+              "FROM vagas GROUP BY semana ORDER BY semana", True),
+    Exercicio(38, "datas", "Acumulado de vagas",
+              "Vagas por dia e o total acumulado até aquele dia. Colunas: `publicada`, `total`, `acumulado`, "
+              "em ordem de data.",
+              "SUM(total) OVER (ORDER BY publicada)",
+              "WITH d AS (SELECT publicada, COUNT(*) AS total FROM vagas GROUP BY publicada) "
+              "SELECT publicada, total, CAST(SUM(total) OVER (ORDER BY publicada) AS INTEGER) AS acumulado "
+              "FROM d ORDER BY publicada", True),
+    Exercicio(39, "subconsultas", "Empresas só com vaga sênior",
+              "Liste `empresa` das empresas em que TODAS as vagas são de nível 'sênior+', em ordem alfabética.",
+              "GROUP BY empresa HAVING MIN(nivel) = MAX(nivel) ou NOT EXISTS",
+              "SELECT empresa FROM vagas GROUP BY empresa "
+              "HAVING SUM(CASE WHEN nivel = 'sênior+' THEN 0 ELSE 1 END) = 0 ORDER BY empresa", True),
+    Exercicio(40, "subconsultas", "Pedem Python e SQL juntos",
+              "Quantas vagas pedem Python **e** SQL ao mesmo tempo? Uma coluna.",
+              "INTERSECT ou dois EXISTS",
+              "SELECT COUNT(*) FROM (SELECT id FROM vaga_skill WHERE skill = 'Python' "
+              "INTERSECT SELECT id FROM vaga_skill WHERE skill = 'SQL')"),
 ]
