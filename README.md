@@ -36,6 +36,22 @@ sql-do-zero medir             # confere que os 40 gabaritos se corrigem sozinhos
 sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)
 ```
 
+### Exemplo do `progresso`
+
+Com um `progresso.json` em que o 1 e o 6 foram resolvidos e o 12 ainda não:
+
+```text
+2/40 exercícios resolvidos
+  básico        1/5
+  agrupar       1/7
+  junção        0/6
+  avançado      0/8
+  datas         0/7
+  subconsultas  0/7
+Média de tentativas até acertar: 2.0
+Próximo a tentar: 2, 3, 4, 5, 7
+```
+
 ## Números medidos
 
 - 40/40 gabaritos corrigem como corretos (`sql-do-zero medir`); 64 testes passando, rodando no CI (Python 3.11 e 3.13).

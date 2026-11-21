@@ -20,3 +20,10 @@ def test_cli_demo_grava_arquivo(tmp_path):
     saida = tmp_path / "s" / "index.html"
     assert main(["demo", "--saida", str(saida)]) == 0
     assert "SQL do zero" in saida.read_text(encoding="utf-8")
+
+
+def test_pagina_do_demo_tem_40_exercicios_e_indice_completo():
+    html = gerar_pagina()
+    assert len(EXERCICIOS) == 40
+    assert "SQL do zero: 40 exercícios" in html
+    assert html.count('<li><a href="#ex') == 40
