@@ -1,0 +1,7 @@
+{
+  "1": {"tentativas": 1, "acertou_em": 1},
+  "2": {"tentativas": 2, "acertou_em": 2},
+  "3": {"tentativas": 1, "acertou_em": 1},
+  "6": {"tentativas": 3, "acertou_em": 3},
+  "12": {"tentativas": 2, "acertou_em": null}
+}

@@ -38,6 +38,8 @@ sql-do-zero demo              # gera site/index.html (enunciados, gabarito escon
 
 ### Exemplo do `progresso`
 
+Para testar sem resolver nada, use o arquivo pronto: `sql-do-zero progresso dados/progresso-exemplo.json` (4 resolvidos, 1 pendente).
+
 Com um `progresso.json` em que o 1 e o 6 foram resolvidos e o 12 ainda não:
 
 ```text

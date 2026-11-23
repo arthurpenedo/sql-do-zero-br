@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from sql_do_zero.cli import main
 from sql_do_zero.corretor import conectar
@@ -80,3 +81,11 @@ def test_cli_todos_pasta_vazia_ou_inexistente(tmp_path):
     assert main(["corrigir", "--todos", str(tmp_path)]) == 1
     assert main(["corrigir", "--todos", str(tmp_path / "nao")]) == 2
     assert main(["corrigir"]) == 2
+
+
+def test_progresso_de_exemplo_roda_no_cli(capsys):
+    exemplo = Path(__file__).resolve().parent.parent / "dados" / "progresso-exemplo.json"
+    assert main(["progresso", str(exemplo)]) == 0
+    saida = capsys.readouterr().out
+    assert "4/40 exercícios resolvidos" in saida
+    assert "Média de tentativas até acertar: 1.8" in saida
