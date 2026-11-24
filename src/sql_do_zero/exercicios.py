@@ -1,4 +1,4 @@
-"""Os 45 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 50 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -261,4 +261,32 @@ EXERCICIOS: list[Exercicio] = [
               "1 casa. Coluna: `media`.",
               "COUNT(*) / COUNT(DISTINCT id)",
               "SELECT ROUND(COUNT(*) * 1.0 / COUNT(DISTINCT id), 1) AS media FROM vaga_skill"),
+    Exercicio(46, "datas", "Vagas de outubro",
+              "Quantas vagas foram publicadas em outubro de 2026? Uma coluna.",
+              "intervalo: >= '2026-10-01' e < '2026-11-01'",
+              "SELECT COUNT(*) FROM vagas WHERE publicada >= '2026-10-01' AND publicada < '2026-11-01'"),
+    Exercicio(47, "datas", "A vaga mais recente",
+              "Qual é a data da vaga publicada mais recentemente? Coluna: `ultima`.",
+              "MAX funciona com datas",
+              "SELECT MAX(publicada) AS ultima FROM vagas"),
+    Exercicio(48, "datas", "Vagas por mês",
+              "Quantas vagas foram publicadas em cada mês? Colunas: `mes` (texto AAAA-MM) e `total`; "
+              "em ordem de mês.",
+              "strftime(CAST(publicada AS DATE), '%Y-%m')",
+              "SELECT strftime(CAST(publicada AS DATE), '%Y-%m') AS mes, COUNT(*) AS total "
+              "FROM vagas GROUP BY mes ORDER BY mes", True),
+    Exercicio(49, "união", "Empresas em São Paulo ou remotas",
+              "Quantas empresas diferentes têm vaga na cidade de 'São Paulo' ou no modelo 'remoto'? "
+              "Uma coluna.",
+              "UNION tira as repetidas",
+              "SELECT COUNT(*) FROM (SELECT empresa FROM vagas WHERE cidade = 'São Paulo' "
+              "UNION SELECT empresa FROM vagas WHERE modelo = 'remoto')"),
+    Exercicio(50, "união", "UNION ou UNION ALL?",
+              "Com as mesmas duas listas do exercício 49, quantas linhas a mais o UNION ALL devolve do que "
+              "o UNION? Coluna: `repetidas`.",
+              "UNION ALL mantém as repetidas",
+              "SELECT (SELECT COUNT(*) FROM (SELECT empresa FROM vagas WHERE cidade = 'São Paulo' "
+              "UNION ALL SELECT empresa FROM vagas WHERE modelo = 'remoto')) - "
+              "(SELECT COUNT(*) FROM (SELECT empresa FROM vagas WHERE cidade = 'São Paulo' "
+              "UNION SELECT empresa FROM vagas WHERE modelo = 'remoto')) AS repetidas"),
 ]

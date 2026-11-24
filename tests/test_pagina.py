@@ -22,8 +22,8 @@ def test_cli_demo_grava_arquivo(tmp_path):
     assert "SQL do zero" in saida.read_text(encoding="utf-8")
 
 
-def test_pagina_do_demo_tem_45_exercicios_e_indice_completo():
+def test_pagina_do_demo_tem_50_exercicios_e_indice_completo():
     html = gerar_pagina()
-    assert len(EXERCICIOS) == 45
-    assert "SQL do zero: 45 exercícios" in html
-    assert html.count('<li><a href="#ex') == 45
+    assert len(EXERCICIOS) == 50
+    assert "SQL do zero: 50 exercícios" in html
+    assert html.count('<li><a href="#ex') == 50
