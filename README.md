@@ -15,7 +15,7 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 - 50 exercícios em 8 níveis (os novos: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
   **junção** (JOIN, LEFT JOIN), **avançado** (CASE, CTE, funções de janela), **datas** (intervalos,
   `strftime`, média móvel) e **subconsultas** (IN, EXISTS, correlacionadas).
-- Página estática com os enunciados e o gabarito escondido (`sql-do-zero demo`), publicada pelo `pagina.yml`.
+- Página estática com os enunciados e o gabarito escondido (`sql-do-zero demo`), publicada pelo `pagina.yml`. Tem filtro por nível feito só com CSS (sem JavaScript).
 - Duas tabelas: `vagas` (214 linhas) e `vaga_skill` (uma linha por vaga e skill), dados públicos do radar em 19/10/2026.
 - Corretor: roda a sua consulta e o gabarito, compara colunas, linhas e valores e diz **onde** diferiu.
   Se o exercício não pede ordem, a ordem das linhas não conta.

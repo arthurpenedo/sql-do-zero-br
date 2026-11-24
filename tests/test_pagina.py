@@ -26,4 +26,15 @@ def test_pagina_do_demo_tem_50_exercicios_e_indice_completo():
     html = gerar_pagina()
     assert len(EXERCICIOS) == 50
     assert "SQL do zero: 50 exercícios" in html
-    assert html.count('<li><a href="#ex') == 50
+    assert html.count('<a href="#ex') == 50
+
+
+def test_pagina_tem_filtro_por_nivel_sem_javascript():
+    html = gerar_pagina()
+    niveis = {e.nivel for e in EXERCICIOS}
+    assert html.count('type="radio"') == len(niveis) + 1
+    assert all(f'data-nivel="{n}"' in html for n in niveis)
+    assert html.count(":checked~main section:not(") == len(niveis)
+    assert "<script" not in html
+    # os radios precisam ser irmãos de <main> para o seletor ~ funcionar
+    assert html.index('id="f-todos"') < html.index("<main>")
