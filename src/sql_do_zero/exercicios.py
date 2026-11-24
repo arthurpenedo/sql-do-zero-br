@@ -1,4 +1,4 @@
-"""Os 40 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 45 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -236,4 +236,29 @@ EXERCICIOS: list[Exercicio] = [
               "INTERSECT ou dois EXISTS",
               "SELECT COUNT(*) FROM (SELECT id FROM vaga_skill WHERE skill = 'Python' "
               "INTERSECT SELECT id FROM vaga_skill WHERE skill = 'SQL')"),
+    Exercicio(41, "nulos", "Vagas sem cidade",
+              "Quantas vagas têm `cidade` vazia (NULL)? Uma coluna.",
+              "IS NULL (não use = NULL)",
+              "SELECT COUNT(*) FROM vagas WHERE cidade IS NULL"),
+    Exercicio(42, "nulos", "Cidade ou 'Remoto'",
+              "Liste `empresa` e o local da vaga: a `cidade`, ou 'Remoto' quando não houver cidade. "
+              "Colunas: `empresa`, `local`; só vagas com id até 12, em ordem de id.",
+              "COALESCE(cidade, 'Remoto')",
+              "SELECT empresa, COALESCE(cidade, 'Remoto') AS local FROM vagas WHERE id <= 12 ORDER BY id", True),
+    Exercicio(43, "nulos", "Vagas sem nenhuma skill",
+              "Liste `id` das vagas que não têm nenhuma linha em `vaga_skill`, em ordem de id.",
+              "LEFT JOIN ... WHERE s.id IS NULL (ou NOT EXISTS)",
+              "SELECT v.id FROM vagas v LEFT JOIN vaga_skill s ON s.id = v.id "
+              "WHERE s.id IS NULL ORDER BY v.id", True),
+    Exercicio(44, "subconsultas", "Mesma empresa, mesma cidade",
+              "Quantos pares diferentes de vagas (a, b com a.id < b.id) são da mesma empresa e da mesma "
+              "cidade? Uma coluna. (NULL não é igual a NULL: vagas sem cidade não formam par.)",
+              "JOIN da tabela com ela mesma",
+              "SELECT COUNT(*) FROM vagas a JOIN vagas b ON a.empresa = b.empresa AND a.cidade = b.cidade "
+              "AND a.id < b.id"),
+    Exercicio(45, "agrupar", "Skills por vaga",
+              "Quantas skills a vaga média tem? Considere só vagas com ao menos uma skill; arredonde a "
+              "1 casa. Coluna: `media`.",
+              "COUNT(*) / COUNT(DISTINCT id)",
+              "SELECT ROUND(COUNT(*) * 1.0 / COUNT(DISTINCT id), 1) AS media FROM vaga_skill"),
 ]

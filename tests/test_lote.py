@@ -36,7 +36,7 @@ def test_cli_progresso(tmp_path, capsys):
     arq.write_text('{"1": {"tentativas": 1, "acertou_em": 1}}', encoding="utf-8")
     assert main(["progresso", str(arq)]) == 0
     saida = capsys.readouterr().out
-    assert "1/40 exercícios resolvidos" in saida and "Próximo a tentar: 2" in saida
+    assert "1/45 exercícios resolvidos" in saida and "Próximo a tentar: 2" in saida
     assert main(["progresso", str(tmp_path / "x.json")]) == 2
 
 
@@ -87,5 +87,5 @@ def test_progresso_de_exemplo_roda_no_cli(capsys):
     exemplo = Path(__file__).resolve().parent.parent / "dados" / "progresso-exemplo.json"
     assert main(["progresso", str(exemplo)]) == 0
     saida = capsys.readouterr().out
-    assert "4/40 exercícios resolvidos" in saida
+    assert "4/45 exercícios resolvidos" in saida
     assert "Média de tentativas até acertar: 1.8" in saida
