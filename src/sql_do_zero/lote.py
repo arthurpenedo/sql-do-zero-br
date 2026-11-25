@@ -78,3 +78,11 @@ def resumo_progresso(dados: dict, niveis: dict[int, str]) -> dict:
             tentativas_acerto.append(reg["acertou_em"])
     media = round(sum(tentativas_acerto) / len(tentativas_acerto), 1) if tentativas_acerto else None
     return {"acertados": acertados, "pendentes": pendentes, "media_tentativas": media, "por_nivel": por_nivel}
+
+
+def agrupar_por_nivel(exercicios) -> dict[str, list[int]]:
+    """Números dos exercícios por nível, na ordem em que cada nível aparece."""
+    r: dict[str, list[int]] = {}
+    for ex in exercicios:
+        r.setdefault(ex.nivel, []).append(ex.numero)
+    return r

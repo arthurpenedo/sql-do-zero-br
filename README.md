@@ -26,6 +26,7 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 ```bash
 pip install -e ".[dev]"
 sql-do-zero listar            # os 60 exercícios
+sql-do-zero niveis            # os 10 níveis, com contagem e números
 sql-do-zero ver 6             # enunciado e dica
 sql-do-zero corrigir 6 minha.sql
 # corrige uma pasta inteira (arquivos 01.sql, 7-top.sql...) e conta as tentativas
@@ -35,6 +36,21 @@ sql-do-zero progresso progresso.json   # acertos, pendentes e média de tentativ
 sql-do-zero medir             # confere que os 60 gabaritos se corrigem sozinhos
 sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)
 ```
+
+### Os 10 níveis (`sql-do-zero niveis` imprime o mesmo)
+
+| Nível | Exercícios | Números |
+|---|---|---|
+| básico | 5 | 1, 2, 3, 4, 5 |
+| agrupar | 8 | 6, 7, 8, 9, 10, 31, 32, 45 |
+| junção | 6 | 11, 12, 13, 14, 15, 33 |
+| avançado | 8 | 16, 17, 18, 19, 20, 34, 35, 36 |
+| datas | 10 | 21, 22, 23, 24, 30, 37, 38, 46, 47, 48 |
+| subconsultas | 8 | 25, 26, 27, 28, 29, 39, 40, 44 |
+| nulos | 3 | 41, 42, 43 |
+| união | 2 | 49, 50 |
+| janelas | 5 | 51, 52, 53, 54, 55 |
+| correlacionada | 5 | 56, 57, 58, 59, 60 |
 
 ### Exemplo do `progresso`
 

@@ -6,7 +6,13 @@ from pathlib import Path
 
 from .corretor import buscar, conectar, corrigir
 from .exercicios import EXERCICIOS
-from .lote import carregar, corrigir_pasta, registrar, resumo_progresso
+from .lote import (
+    agrupar_por_nivel,
+    carregar,
+    corrigir_pasta,
+    registrar,
+    resumo_progresso,
+)
 from .pagina import gerar_pagina
 
 
@@ -25,7 +31,8 @@ def main(argv: list[str] | None = None) -> int:
     gab.add_argument("numero", type=int)
     pro = sub.add_parser("progresso", help="resume o JSON de --tentativas: acertos, pendentes e média")
     pro.add_argument("arquivo", type=Path)
-    sub.add_parser("medir",help="roda todos os gabaritos e confere que se corrigem sozinhos")
+    sub.add_parser("niveis", help="mostra os níveis, quantos exercícios e quais números")
+    sub.add_parser("medir", help="roda todos os gabaritos e confere que se corrigem sozinhos")
     dem = sub.add_parser("demo", help="gera a página HTML com os enunciados (gabarito escondido)")
     dem.add_argument("--saida", type=Path, default=Path("site/index.html"))
     a = p.parse_args(argv)
@@ -33,6 +40,10 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "listar":
         for ex in EXERCICIOS:
             print(f"{ex.numero:2d}  [{ex.nivel}]  {ex.titulo}")
+        return 0
+    if a.cmd == "niveis":
+        for nivel, numeros in agrupar_por_nivel(EXERCICIOS).items():
+            print(f"{nivel:14s} {len(numeros):2d}  {', '.join(map(str, numeros))}")
         return 0
     if a.cmd == "demo":
         a.saida.parent.mkdir(parents=True, exist_ok=True)
