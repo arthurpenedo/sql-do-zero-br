@@ -1,4 +1,4 @@
-"""Os 60 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 70 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -353,4 +353,67 @@ EXERCICIOS: list[Exercicio] = [
               "WHERE id = (SELECT MIN(id) FROM vagas v2 WHERE v2.empresa = v.empresa)",
               "SELECT v.id FROM vagas v WHERE v.id = "
               "(SELECT MIN(v2.id) FROM vagas v2 WHERE v2.empresa = v.empresa) ORDER BY v.id", True),
+    Exercicio(61, "agregação filtrada", "Remotas e híbridas numa linha",
+              "Numa única consulta, devolva duas colunas: quantas vagas são `remoto` e quantas são `híbrido`.",
+              "COUNT(*) FILTER (WHERE ...)",
+              "SELECT COUNT(*) FILTER (WHERE modelo = 'remoto'), "
+              "COUNT(*) FILTER (WHERE modelo = 'híbrido') FROM vagas"),
+    Exercicio(62, "agregação filtrada", "Empresas com 3 ou mais vagas",
+              "Liste `empresa` e a quantidade de vagas das empresas com 3 ou mais vagas. "
+              "Ordem: mais vagas primeiro, depois `empresa`.",
+              "GROUP BY empresa HAVING COUNT(*) >= 3",
+              "SELECT empresa, COUNT(*) FROM vagas GROUP BY empresa HAVING COUNT(*) >= 3 "
+              "ORDER BY 2 DESC, empresa", True),
+    Exercicio(63, "agregação filtrada", "Remotas por nível",
+              "Para cada `nivel`, devolva o nível e quantas vagas remotas ele tem, usando FILTER. "
+              "Ordem por `nivel`.",
+              "COUNT(*) FILTER (WHERE modelo = 'remoto') com GROUP BY nivel",
+              "SELECT nivel, COUNT(*) FILTER (WHERE modelo = 'remoto') FROM vagas GROUP BY nivel "
+              "ORDER BY nivel", True),
+    Exercicio(64, "agregação filtrada", "Skills raras",
+              "Liste as `skill` que aparecem em no máximo 5 vagas. Ordem alfabética.",
+              "GROUP BY skill HAVING COUNT(*) <= 5",
+              "SELECT skill FROM vaga_skill GROUP BY skill HAVING COUNT(*) <= 5 ORDER BY skill", True),
+    Exercicio(65, "agregação filtrada", "Estados sem vaga remota",
+              "Liste os `uf` (ignore nulos) que têm vagas presenciais mas nenhuma vaga remota. "
+              "Ordem alfabética.",
+              "HAVING COUNT(*) FILTER (WHERE ...) = 0 e COUNT(*) FILTER (WHERE ...) > 0",
+              "SELECT uf FROM vagas WHERE uf IS NOT NULL GROUP BY uf "
+              "HAVING COUNT(*) FILTER (WHERE modelo = 'remoto') = 0 "
+              "AND COUNT(*) FILTER (WHERE modelo = 'presencial') > 0 ORDER BY uf", True),
+    Exercicio(66, "agregação filtrada", "Empresas que misturam modelos",
+              "Liste `empresa` das empresas que publicaram vagas em 2 ou mais `modelo` diferentes. "
+              "Ordem alfabética.",
+              "HAVING COUNT(DISTINCT modelo) >= 2",
+              "SELECT empresa FROM vagas GROUP BY empresa HAVING COUNT(DISTINCT modelo) >= 2 "
+              "ORDER BY empresa", True),
+    Exercicio(67, "agregação filtrada", "Skill mais comum por nível",
+              "Para o nível `estágio`, liste `skill` e quantas vagas de estágio pedem a skill, só as que "
+              "aparecem em 2 ou mais vagas. Ordem: mais vagas primeiro, depois `skill`.",
+              "JOIN vagas com vaga_skill, WHERE nivel = 'estágio', HAVING COUNT(*) >= 2",
+              "SELECT s.skill, COUNT(*) FROM vagas v JOIN vaga_skill s ON s.id = v.id "
+              "WHERE v.nivel = 'estágio' GROUP BY s.skill HAVING COUNT(*) >= 2 "
+              "ORDER BY 2 DESC, s.skill", True),
+    Exercicio(68, "agregação filtrada", "Média de skills por modelo",
+              "Para cada `modelo`, devolva o modelo e a média de skills por vaga, arredondada para 2 casas "
+              "(considere só vagas com ao menos uma skill). Ordem por `modelo`.",
+              "contar skills por vaga numa subconsulta e fazer AVG por modelo",
+              "SELECT modelo, ROUND(AVG(n), 2) FROM (SELECT v.modelo, COUNT(*) AS n FROM vagas v "
+              "JOIN vaga_skill s ON s.id = v.id GROUP BY v.id, v.modelo) GROUP BY modelo ORDER BY modelo",
+              True),
+    Exercicio(69, "agregação filtrada", "Dias com mais de 10 vagas",
+              "Liste `publicada` (como data, `CAST(publicada AS DATE)`) e a quantidade de vagas nos dias "
+              "com mais de 10 vagas publicadas. Ordem por data.",
+              "GROUP BY CAST(publicada AS DATE) HAVING COUNT(*) > 10",
+              "SELECT CAST(publicada AS DATE) AS dia, COUNT(*) FROM vagas "
+              "GROUP BY dia HAVING COUNT(*) > 10 ORDER BY dia", True),
+    Exercicio(70, "agregação filtrada", "Júnior ou estágio por empresa",
+              "Para cada empresa com ao menos 1 vaga `estágio` ou `júnior/trainee`, devolva `empresa` e "
+              "quantas vagas de entrada ela tem (use FILTER com IN). Ordem: mais vagas primeiro, "
+              "depois `empresa`.",
+              "FILTER (WHERE nivel IN (...)) e HAVING sobre o mesmo filtro",
+              "SELECT empresa, COUNT(*) FILTER (WHERE nivel IN ('estágio', 'júnior/trainee')) "
+              "FROM vagas GROUP BY empresa "
+              "HAVING COUNT(*) FILTER (WHERE nivel IN ('estágio', 'júnior/trainee')) >= 1 "
+              "ORDER BY 2 DESC, empresa", True),
 ]
