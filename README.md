@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/arthurpenedo/sql-do-zero-br/actions/workflows/ci.yml/badge.svg)
 
-50 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
+60 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
 
 ## O problema
 
@@ -12,7 +12,7 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ## O que faz
 
-- 50 exercícios em 8 níveis (os novos: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
+- 60 exercícios em 10 níveis (os novos: **janelas**: ROW_NUMBER, RANK, LAG, soma acumulada; **correlacionada**: subconsulta correlacionada, EXISTS e NOT EXISTS; antes: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
   **junção** (JOIN, LEFT JOIN), **avançado** (CASE, CTE, funções de janela), **datas** (intervalos,
   `strftime`, média móvel) e **subconsultas** (IN, EXISTS, correlacionadas).
 - Página estática com os enunciados e o gabarito escondido (`sql-do-zero demo`), publicada pelo `pagina.yml`. Tem filtro por nível feito só com CSS (sem JavaScript).
@@ -25,14 +25,14 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ```bash
 pip install -e ".[dev]"
-sql-do-zero listar            # os 50 exercícios
+sql-do-zero listar            # os 60 exercícios
 sql-do-zero ver 6             # enunciado e dica
 sql-do-zero corrigir 6 minha.sql
 # corrige uma pasta inteira (arquivos 01.sql, 7-top.sql...) e conta as tentativas
 sql-do-zero corrigir --todos respostas/ --tentativas progresso.json
 sql-do-zero gabarito 6        # só depois de tentar
 sql-do-zero progresso progresso.json   # acertos, pendentes e média de tentativas por nível
-sql-do-zero medir             # confere que os 50 gabaritos se corrigem sozinhos
+sql-do-zero medir             # confere que os 60 gabaritos se corrigem sozinhos
 sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)
 ```
 
@@ -43,7 +43,7 @@ Para testar sem resolver nada, use o arquivo pronto: `sql-do-zero progresso dado
 Com um `progresso.json` em que o 1 e o 6 foram resolvidos e o 12 ainda não:
 
 ```text
-2/50 exercícios resolvidos
+2/60 exercícios resolvidos
   básico        1/5
   agrupar       1/7
   junção        0/6
@@ -56,7 +56,7 @@ Próximo a tentar: 2, 3, 4, 5, 7
 
 ## Números medidos
 
-- 50/50 gabaritos corrigem como corretos (`sql-do-zero medir`); 76 testes passando, rodando no CI (Python 3.11 e 3.13).
+- 60/60 gabaritos corrigem como corretos (`sql-do-zero medir`); 87 testes passando, rodando no CI (Python 3.11 e 3.13).
 - Dados: 214 vagas, 129 empresas, 69 remotas (32,2%).
 
 ## Limites

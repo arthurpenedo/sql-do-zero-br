@@ -1,4 +1,4 @@
-"""Os 50 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 60 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -289,4 +289,68 @@ EXERCICIOS: list[Exercicio] = [
               "UNION ALL SELECT empresa FROM vagas WHERE modelo = 'remoto')) - "
               "(SELECT COUNT(*) FROM (SELECT empresa FROM vagas WHERE cidade = 'São Paulo' "
               "UNION SELECT empresa FROM vagas WHERE modelo = 'remoto')) AS repetidas"),
+    Exercicio(51, "janelas", "Ranking de empresas",
+              "Conte as vagas por empresa e numere as empresas da que tem mais vagas para a que tem menos, "
+              "desempate por nome. Colunas: `empresa`, `total`, `posicao`; só as 5 primeiras posições.",
+              "ROW_NUMBER() OVER (ORDER BY total DESC, empresa)",
+              "SELECT empresa, total, posicao FROM (SELECT empresa, COUNT(*) AS total, "
+              "ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC, empresa) AS posicao FROM vagas GROUP BY empresa) "
+              "WHERE posicao <= 5 ORDER BY posicao", True),
+    Exercicio(52, "janelas", "Vaga mais recente de cada empresa",
+              "Para cada empresa com 3 vagas ou mais, devolva o `titulo` da vaga publicada mais recentemente "
+              "(desempate por menor `id`). Colunas: `empresa`, `titulo`; ordem por empresa.",
+              "ROW_NUMBER() OVER (PARTITION BY empresa ORDER BY publicada DESC, id)",
+              "SELECT empresa, titulo FROM (SELECT empresa, titulo, "
+              "ROW_NUMBER() OVER (PARTITION BY empresa ORDER BY publicada DESC, id) AS r, "
+              "COUNT(*) OVER (PARTITION BY empresa) AS n FROM vagas) WHERE r = 1 AND n >= 3 "
+              "ORDER BY empresa", True),
+    Exercicio(53, "janelas", "Total acumulado por dia",
+              "Quantas vagas foram publicadas por dia e quanto isso soma até aquele dia? "
+              "Colunas: `dia`, `total`, `acumulado`; em ordem de dia.",
+              "SUM(COUNT(*)) OVER (ORDER BY publicada)",
+              "SELECT publicada AS dia, COUNT(*) AS total, "
+              "SUM(COUNT(*)) OVER (ORDER BY publicada) AS acumulado "
+              "FROM vagas GROUP BY publicada ORDER BY publicada", True),
+    Exercicio(54, "janelas", "Skills por posição empatada",
+              "Conte as vagas de cada skill e dê a `posicao` com RANK (empates dividem a mesma posição). "
+              "Colunas: `skill`, `total`, `posicao`; só posição 3 ou melhor; ordem por posição e skill.",
+              "RANK() OVER (ORDER BY COUNT(*) DESC)",
+              "SELECT skill, total, posicao FROM (SELECT skill, COUNT(*) AS total, "
+              "RANK() OVER (ORDER BY COUNT(*) DESC) AS posicao FROM vaga_skill GROUP BY skill) "
+              "WHERE posicao <= 3 ORDER BY posicao, skill", True),
+    Exercicio(55, "janelas", "Comparar com a vaga anterior",
+              "Para as vagas publicadas em '2026-10-19', devolva `id` e `anterior`: o `id` da vaga logo antes "
+              "(menor `id`) entre as mesmas vagas, ou NULL na primeira. Ordem por `id`.",
+              "LAG(id) OVER (ORDER BY id), e o filtro vem antes da janela",
+              "SELECT id, LAG(id) OVER (ORDER BY id) AS anterior FROM vagas "
+              "WHERE publicada = '2026-10-19' ORDER BY id", True),
+    Exercicio(56, "correlacionada", "Vagas com mais skills que a média",
+              "Liste `id` das vagas que têm mais skills do que a média de skills por vaga (considere só "
+              "vagas com ao menos uma skill). Ordem por `id`.",
+              "subconsulta com AVG sobre uma contagem",
+              "SELECT id FROM vaga_skill GROUP BY id HAVING COUNT(*) > "
+              "(SELECT AVG(n) FROM (SELECT COUNT(*) AS n FROM vaga_skill GROUP BY id)) ORDER BY id", True),
+    Exercicio(57, "correlacionada", "Vagas mais novas que a média da empresa",
+              "Liste `id` das vagas publicadas depois da data média de publicação da própria "
+              "empresa. Use `CAST(publicada AS DATE)` e compare com `AVG(epoch(...))`. Ordem por `id`.",
+              "subconsulta correlacionada: WHERE v2.empresa = v.empresa",
+              "SELECT v.id FROM vagas v WHERE epoch(CAST(v.publicada AS DATE)) > "
+              "(SELECT AVG(epoch(CAST(v2.publicada AS DATE))) FROM vagas v2 WHERE v2.empresa = v.empresa) "
+              "ORDER BY v.id", True),
+    Exercicio(58, "correlacionada", "Vagas que pedem Python",
+              "Quantas vagas têm a skill 'Python'? Resolva com EXISTS, não com JOIN. Uma coluna.",
+              "WHERE EXISTS (SELECT 1 FROM vaga_skill s WHERE s.id = v.id AND ...)",
+              "SELECT COUNT(*) FROM vagas v WHERE EXISTS "
+              "(SELECT 1 FROM vaga_skill s WHERE s.id = v.id AND s.skill = 'Python')"),
+    Exercicio(59, "correlacionada", "Vagas sem SQL nem Python",
+              "Quantas vagas NÃO têm a skill 'SQL' nem a skill 'Python'? Resolva com NOT EXISTS. Uma coluna.",
+              "NOT EXISTS com skill IN ('SQL', 'Python')",
+              "SELECT COUNT(*) FROM vagas v WHERE NOT EXISTS "
+              "(SELECT 1 FROM vaga_skill s WHERE s.id = v.id AND s.skill IN ('SQL', 'Python'))"),
+    Exercicio(60, "correlacionada", "A primeira vaga de cada empresa",
+              "Liste `id` da vaga de menor `id` de cada empresa, sem usar janela: use uma subconsulta "
+              "correlacionada com MIN. Ordem por `id`.",
+              "WHERE id = (SELECT MIN(id) FROM vagas v2 WHERE v2.empresa = v.empresa)",
+              "SELECT v.id FROM vagas v WHERE v.id = "
+              "(SELECT MIN(v2.id) FROM vagas v2 WHERE v2.empresa = v.empresa) ORDER BY v.id", True),
 ]
