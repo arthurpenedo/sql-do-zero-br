@@ -38,3 +38,13 @@ def test_pagina_tem_filtro_por_nivel_sem_javascript():
     assert "<script" not in html
     # os radios precisam ser irmãos de <main> para o seletor ~ funcionar
     assert html.index('id="f-todos"') < html.index("<main>")
+
+
+def test_cli_demo_recusa_saida_que_e_pasta_ou_passa_por_arquivo(tmp_path, capsys):
+    from sql_do_zero.cli import main
+
+    arq = tmp_path / "arq.txt"
+    arq.write_text("x")
+    assert main(["demo", "--saida", str(tmp_path)]) == 2
+    assert main(["demo", "--saida", str(arq / "x.html")]) == 2
+    assert capsys.readouterr().err.count("--saida precisa") == 2
