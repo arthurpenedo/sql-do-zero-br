@@ -28,7 +28,12 @@ def corrigir_pasta(con, pasta: Path) -> list[tuple[int, bool, str]]:
         except KeyError as e:
             linhas.append((numero, False, e.args[0]))
             continue
-        r = corrigir(con, ex, arq.read_text(encoding="utf-8"))
+        try:
+            texto = arq.read_text(encoding="utf-8")
+        except UnicodeDecodeError:  # um arquivo salvo em Latin-1 não derruba o lote inteiro
+            linhas.append((numero, False, f"{arq.name} não está em UTF-8; salve o arquivo como UTF-8."))
+            continue
+        r = corrigir(con, ex, texto)
         linhas.append((numero, r.ok, r.mensagem))
     return linhas
 

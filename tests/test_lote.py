@@ -89,3 +89,13 @@ def test_progresso_de_exemplo_roda_no_cli(capsys):
     saida = capsys.readouterr().out
     assert "4/60 exercícios resolvidos" in saida
     assert "Média de tentativas até acertar: 1.8" in saida
+
+
+def test_arquivo_fora_de_utf8_vira_erro_sem_derrubar_o_lote(tmp_path, capsys):
+    (tmp_path / "01.sql").write_bytes("SELECT 'ação'".encode("latin-1"))
+    (tmp_path / "02.sql").write_text("SELECT 1", encoding="utf-8")
+    res = corrigir_pasta(conectar(), tmp_path)
+    assert [n for n, _, _ in res] == [1, 2]
+    assert not res[0][1] and "UTF-8" in res[0][2]
+    assert main(["corrigir", "1", str(tmp_path / "01.sql")]) == 2
+    assert "UTF-8" in capsys.readouterr().err

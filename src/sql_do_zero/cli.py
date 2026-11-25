@@ -99,7 +99,12 @@ def main(argv: list[str] | None = None) -> int:
         if a.arquivo is None or not a.arquivo.is_file():
             print(f"Arquivo não encontrado: {a.arquivo}", file=sys.stderr)
             return 2
-        r = corrigir(conectar(), ex, a.arquivo.read_text(encoding="utf-8"))
+        try:
+            consulta = a.arquivo.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            print(f"{a.arquivo} não está em UTF-8; salve o arquivo como UTF-8.", file=sys.stderr)
+            return 2
+        r = corrigir(conectar(), ex, consulta)
         print(r.mensagem)
         if a.tentativas:
             registrar(a.tentativas, ex.numero, r.ok)
