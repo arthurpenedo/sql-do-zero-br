@@ -44,6 +44,9 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "demo" and (a.saida.is_dir() or any(q.is_file() for q in a.saida.parents)):
         print(f"--saida precisa ser um arquivo .html num caminho válido: {a.saida}", file=sys.stderr)
         return 2
+    if a.cmd == "corrigir" and a.tentativas and a.tentativas.is_dir():
+        print(f"--tentativas precisa ser um arquivo .json, mas {a.tentativas} é uma pasta.", file=sys.stderr)
+        return 2
     if a.cmd == "niveis":
         for nivel, numeros in agrupar_por_nivel(EXERCICIOS).items():
             print(f"{nivel:14s} {len(numeros):2d}  {', '.join(map(str, numeros))}")

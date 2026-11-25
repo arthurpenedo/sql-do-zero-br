@@ -99,3 +99,11 @@ def test_arquivo_fora_de_utf8_vira_erro_sem_derrubar_o_lote(tmp_path, capsys):
     assert not res[0][1] and "UTF-8" in res[0][2]
     assert main(["corrigir", "1", str(tmp_path / "01.sql")]) == 2
     assert "UTF-8" in capsys.readouterr().err
+
+
+def test_tentativas_que_e_pasta_devolve_2(tmp_path, capsys):
+    sql = tmp_path / "01.sql"
+    sql.write_text("SELECT 1")
+    assert main(["corrigir", "1", str(sql), "--tentativas", str(tmp_path)]) == 2
+    assert main(["corrigir", "--todos", str(tmp_path), "--tentativas", str(tmp_path)]) == 2
+    assert capsys.readouterr().err.count("é uma pasta") == 2
