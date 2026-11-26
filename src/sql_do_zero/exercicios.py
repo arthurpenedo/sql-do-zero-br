@@ -1,4 +1,4 @@
-"""Os 90 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 100 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -537,4 +537,68 @@ EXERCICIOS: list[Exercicio] = [
               "SELECT skill, n FROM (SELECT skill, COUNT(*) AS n FROM vaga_skill GROUP BY skill) t "
               "WHERE n > (SELECT AVG(c) FROM (SELECT COUNT(*) AS c FROM vaga_skill GROUP BY skill) u) "
               "ORDER BY n DESC, skill", True),
+    Exercicio(91, "case", "Vagas de entrada ou não",
+              "Separe as vagas em dois grupos com CASE WHEN: 'entrada' (`nivel` 'estágio' ou 'júnior/trainee') "
+              "e 'outras'. Devolva o grupo e quantas vagas tem em cada, em ordem de grupo.",
+              "CASE WHEN nivel IN (...) THEN 'entrada' ELSE 'outras' END, e GROUP BY pelo mesmo CASE (ou posição 1)",
+              "SELECT CASE WHEN nivel IN ('estágio', 'júnior/trainee') THEN 'entrada' ELSE 'outras' END AS grupo, "
+              "COUNT(*) FROM vagas GROUP BY 1 ORDER BY 1", True),
+    Exercicio(92, "case", "Modelos lado a lado",
+              "Em UMA linha e três colunas, devolva quantas vagas são remotas, híbridas e presenciais "
+              "(nessa ordem), somando CASE WHEN.",
+              "SUM(CASE WHEN modelo = '...' THEN 1 ELSE 0 END), uma vez por modelo",
+              "SELECT SUM(CASE WHEN modelo = 'remoto' THEN 1 ELSE 0 END), "
+              "SUM(CASE WHEN modelo = 'híbrido' THEN 1 ELSE 0 END), "
+              "SUM(CASE WHEN modelo = 'presencial' THEN 1 ELSE 0 END) FROM vagas"),
+    Exercicio(93, "case", "Vagas por região",
+              "Classifique cada vaga pela `uf`: 'SP' se for 'São Paulo', 'sem estado' se for NULL e "
+              "'outros estados' nos demais. Devolva a região e o total, mais vagas primeiro e depois a região.",
+              "teste IS NULL antes de comparar; NULL = 'x' nunca é verdadeiro",
+              "SELECT CASE WHEN uf IS NULL THEN 'sem estado' WHEN uf = 'São Paulo' THEN 'SP' "
+              "ELSE 'outros estados' END AS regiao, COUNT(*) AS total FROM vagas "
+              "GROUP BY 1 ORDER BY total DESC, regiao", True),
+    Exercicio(94, "case", "Percentual de vagas remotas",
+              "Qual a porcentagem de vagas remotas sobre o total? Uma coluna, arredondada para 1 casa.",
+              "100.0 * SUM(CASE ...) / COUNT(*); o 100.0 evita divisão inteira",
+              "SELECT ROUND(100.0 * SUM(CASE WHEN modelo = 'remoto' THEN 1 ELSE 0 END) / COUNT(*), 1) FROM vagas"),
+    Exercicio(95, "case", "Ordem do nível, não alfabética",
+              "Liste `titulo` e `nivel` das vagas de 'estágio' e 'júnior/trainee', estágio primeiro, "
+              "depois júnior/trainee e, dentro de cada um, por `titulo`.",
+              "ORDER BY aceita CASE: dê 1 para estágio e 2 para júnior/trainee",
+              "SELECT titulo, nivel FROM vagas WHERE nivel IN ('estágio', 'júnior/trainee') "
+              "ORDER BY CASE nivel WHEN 'estágio' THEN 1 ELSE 2 END, titulo", True),
+    Exercicio(96, "case", "Faixas de skills por vaga",
+              "Conte as skills de cada vaga e classifique em 'poucas' (até 2), 'médias' (3 ou 4) e "
+              "'muitas' (5 ou mais). Devolva a faixa e quantas vagas caem nela, em ordem de faixa.",
+              "subconsulta no FROM com COUNT(*) por id, e o CASE na consulta de fora",
+              "SELECT CASE WHEN k <= 2 THEN 'poucas' WHEN k <= 4 THEN 'médias' ELSE 'muitas' END AS faixa, "
+              "COUNT(*) FROM (SELECT id, COUNT(*) AS k FROM vaga_skill GROUP BY id) t GROUP BY 1 ORDER BY 1", True),
+    Exercicio(97, "case", "Cidade que falta",
+              "Das vagas híbridas, liste `titulo` e a cidade, trocando a cidade NULL por 'não informada'. "
+              "Ordem: `titulo`, depois a cidade.",
+              "CASE WHEN cidade IS NULL THEN '...' ELSE cidade END",
+              "SELECT titulo, CASE WHEN cidade IS NULL THEN 'não informada' ELSE cidade END AS local "
+              "FROM vagas WHERE modelo = 'híbrido' ORDER BY titulo, local", True),
+    Exercicio(98, "case", "Vagas que pedem SQL e Python",
+              "Quantas vagas pedem as duas skills, 'SQL' e 'Python'? Agrupe `vaga_skill` por `id`, filtre no "
+              "HAVING com SUM(CASE ...) e conte o resultado. Uma coluna.",
+              "uma SUM(CASE WHEN skill = '...' THEN 1 ELSE 0 END) > 0 para cada skill, ligadas por AND",
+              "SELECT COUNT(*) FROM (SELECT id FROM vaga_skill GROUP BY id "
+              "HAVING SUM(CASE WHEN skill = 'SQL' THEN 1 ELSE 0 END) > 0 "
+              "AND SUM(CASE WHEN skill = 'Python' THEN 1 ELSE 0 END) > 0) t"),
+    Exercicio(99, "case", "Prioridade de candidatura",
+              "Dê prioridade a cada vaga: 'alta' se for de entrada ('estágio' ou 'júnior/trainee') e remota, "
+              "'média' se for de entrada e não remota, 'baixa' nas demais. Devolva a prioridade e o total, "
+              "na ordem alta, média, baixa.",
+              "o primeiro WHEN verdadeiro vale; ordene com outro CASE (ou MIN) em vez de ordem alfabética",
+              "SELECT CASE WHEN nivel IN ('estágio', 'júnior/trainee') AND modelo = 'remoto' THEN 'alta' "
+              "WHEN nivel IN ('estágio', 'júnior/trainee') THEN 'média' ELSE 'baixa' END AS prioridade, "
+              "COUNT(*) FROM vagas GROUP BY 1 "
+              "ORDER BY CASE prioridade WHEN 'alta' THEN 1 WHEN 'média' THEN 2 ELSE 3 END", True),
+    Exercicio(100, "case", "Remotas primeiro",
+              "Liste `titulo` e `modelo` das 5 primeiras vagas quando as remotas vêm antes das outras e, "
+              "dentro de cada grupo, por `titulo` e `empresa`.",
+              "ORDER BY CASE WHEN modelo = 'remoto' THEN 0 ELSE 1 END, titulo, empresa, depois LIMIT 5",
+              "SELECT titulo, modelo FROM vagas "
+              "ORDER BY CASE WHEN modelo = 'remoto' THEN 0 ELSE 1 END, titulo, empresa LIMIT 5", True),
 ]
