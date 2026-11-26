@@ -1,4 +1,4 @@
-"""Os 70 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 80 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -416,4 +416,71 @@ EXERCICIOS: list[Exercicio] = [
               "FROM vagas GROUP BY empresa "
               "HAVING COUNT(*) FILTER (WHERE nivel IN ('estágio', 'júnior/trainee')) >= 1 "
               "ORDER BY 2 DESC, empresa", True),
+    Exercicio(71, "cte", "Empresas acima da média",
+              "Liste `empresa` e quantas vagas ela tem, só das empresas com mais vagas que a média "
+              "por empresa. Use WITH. Ordem: mais vagas primeiro, depois `empresa`.",
+              "WITH por_empresa AS (...) e compare com (SELECT AVG(n) FROM por_empresa)",
+              "WITH por_empresa AS (SELECT empresa, COUNT(*) AS n FROM vagas GROUP BY empresa) "
+              "SELECT empresa, n FROM por_empresa WHERE n > (SELECT AVG(n) FROM por_empresa) "
+              "ORDER BY n DESC, empresa", True),
+    Exercicio(72, "cte", "Skills das vagas remotas",
+              "Use um WITH com os `id` das vagas remotas e liste as 5 `skill` mais pedidas nelas, com "
+              "a contagem. Ordem: mais vagas primeiro, depois `skill`.",
+              "WITH remotas AS (SELECT id ...) JOIN vaga_skill, LIMIT 5",
+              "WITH remotas AS (SELECT id FROM vagas WHERE modelo = 'remoto') "
+              "SELECT s.skill, COUNT(*) FROM vaga_skill s JOIN remotas r ON r.id = s.id "
+              "GROUP BY s.skill ORDER BY 2 DESC, s.skill LIMIT 5", True),
+    Exercicio(73, "cte", "Duas CTEs: total e remotas por nível",
+              "Com duas CTEs, devolva `nivel`, o total de vagas do nível e quantas delas são remotas "
+              "(0 se nenhuma). Ordem por `nivel`.",
+              "uma CTE com o total, outra com as remotas, LEFT JOIN e COALESCE",
+              "WITH total AS (SELECT nivel, COUNT(*) AS n FROM vagas GROUP BY nivel), "
+              "rem AS (SELECT nivel, COUNT(*) AS n FROM vagas WHERE modelo = 'remoto' GROUP BY nivel) "
+              "SELECT t.nivel, t.n, COALESCE(r.n, 0) FROM total t LEFT JOIN rem r ON r.nivel = t.nivel "
+              "ORDER BY t.nivel", True),
+    Exercicio(74, "cte", "Empresa líder de cada nível",
+              "Para cada `nivel`, devolva a empresa com mais vagas nele e a quantidade (em empate, a "
+              "primeira em ordem alfabética). Ordem por `nivel`.",
+              "CTE que conta por nivel e empresa, outra com ROW_NUMBER() OVER (PARTITION BY nivel ...)",
+              "WITH c AS (SELECT nivel, empresa, COUNT(*) AS n FROM vagas GROUP BY nivel, empresa), "
+              "r AS (SELECT nivel, empresa, n, ROW_NUMBER() OVER (PARTITION BY nivel "
+              "ORDER BY n DESC, empresa) AS rn FROM c) "
+              "SELECT nivel, empresa, n FROM r WHERE rn = 1 ORDER BY nivel", True),
+    Exercicio(75, "cte", "Dias acima da média",
+              "Liste os dias (`CAST(publicada AS DATE)`) com mais vagas que a média diária, com a "
+              "quantidade. Ordem por data.",
+              "WITH d AS (SELECT CAST(publicada AS DATE) AS dia, COUNT(*) AS n ...)",
+              "WITH d AS (SELECT CAST(publicada AS DATE) AS dia, COUNT(*) AS n FROM vagas GROUP BY dia) "
+              "SELECT dia, n FROM d WHERE n > (SELECT AVG(n) FROM d) ORDER BY dia", True),
+    Exercicio(76, "rollup", "Vagas por modelo com total",
+              "Devolva `modelo` e a quantidade de vagas, mais uma linha final com o total geral "
+              "(`modelo` NULL). Use GROUP BY ROLLUP. Ordem: modelos em ordem alfabética, total por último.",
+              "GROUP BY ROLLUP(modelo) e ORDER BY GROUPING(modelo), modelo",
+              "SELECT modelo, COUNT(*) FROM vagas GROUP BY ROLLUP(modelo) "
+              "ORDER BY GROUPING(modelo), modelo", True),
+    Exercicio(77, "rollup", "Nível e modelo com subtotais",
+              "Devolva `nivel`, `modelo` e a quantidade, com subtotal por nível e total geral "
+              "(GROUP BY ROLLUP(nivel, modelo)). Ordem: GROUPING(nivel), nivel, GROUPING(modelo), modelo.",
+              "ROLLUP(nivel, modelo) gera os subtotais por nivel e o total",
+              "SELECT nivel, modelo, COUNT(*) FROM vagas GROUP BY ROLLUP(nivel, modelo) "
+              "ORDER BY GROUPING(nivel), nivel, GROUPING(modelo), modelo", True),
+    Exercicio(78, "rollup", "Rótulo TOTAL",
+              "Como o 76, mas troque o NULL do total geral pelo texto 'TOTAL' na coluna `modelo`. "
+              "Ordem: modelos em ordem alfabética, 'TOTAL' por último.",
+              "COALESCE(modelo, 'TOTAL') e ORDER BY GROUPING(modelo), modelo",
+              "SELECT COALESCE(modelo, 'TOTAL') AS modelo, COUNT(*) FROM vagas GROUP BY ROLLUP(modelo) "
+              "ORDER BY GROUPING(modelo), modelo", True),
+    Exercicio(79, "cte", "Sequência com WITH RECURSIVE",
+              "Gere os números de 1 a 5 com `WITH RECURSIVE` e devolva cada número e o seu quadrado. "
+              "Ordem pelo número.",
+              "WITH RECURSIVE n(i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 5)",
+              "WITH RECURSIVE n(i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 5) "
+              "SELECT i, i * i FROM n ORDER BY i", True),
+    Exercicio(80, "rollup", "Remotas por estado com total",
+              "Use um WITH com as vagas remotas que têm `uf` e devolva `uf`, a quantidade e uma linha "
+              "final com o total (ROLLUP). Ordem: estados com mais vagas primeiro, depois `uf`, total por último.",
+              "WITH rem AS (...) SELECT uf, COUNT(*) FROM rem GROUP BY ROLLUP(uf)",
+              "WITH rem AS (SELECT uf FROM vagas WHERE modelo = 'remoto' AND uf IS NOT NULL) "
+              "SELECT uf, COUNT(*) FROM rem GROUP BY ROLLUP(uf) "
+              "ORDER BY GROUPING(uf), 2 DESC, uf", True),
 ]
