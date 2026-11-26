@@ -17,11 +17,13 @@ from .pagina import gerar_pagina
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="sql-do-zero", description="80 exercícios de SQL com correção automática")
+    p = argparse.ArgumentParser(prog="sql-do-zero", description="90 exercícios de SQL com correção automática")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("listar", help="lista os exercícios")
     ver = sub.add_parser("ver", help="mostra o enunciado")
     ver.add_argument("numero", type=int)
+    dic = sub.add_parser("dica", help="mostra só a dica do exercício")
+    dic.add_argument("numero", type=int)
     cor = sub.add_parser("corrigir", help="corrige o arquivo .sql do aluno")
     cor.add_argument("numero", type=int, nargs="?")
     cor.add_argument("arquivo", type=Path, nargs="?")
@@ -96,6 +98,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     if a.cmd == "ver":
         print(f"{ex.numero}. {ex.titulo} [{ex.nivel}]\n\n{ex.enunciado}\n\nDica: {ex.dica}")
+    elif a.cmd == "dica":
+        print(ex.dica)
     elif a.cmd == "gabarito":
         print(ex.gabarito)
     else:

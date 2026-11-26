@@ -1,4 +1,4 @@
-"""Os 80 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 90 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -483,4 +483,58 @@ EXERCICIOS: list[Exercicio] = [
               "WITH rem AS (SELECT uf FROM vagas WHERE modelo = 'remoto' AND uf IS NOT NULL) "
               "SELECT uf, COUNT(*) FROM rem GROUP BY ROLLUP(uf) "
               "ORDER BY GROUPING(uf), 2 DESC, uf", True),
+    Exercicio(81, "derivadas", "Média de vagas por empresa",
+              "Qual a média de vagas por empresa? Use uma subconsulta no FROM que conta por empresa. "
+              "Uma coluna, arredondada para 2 casas.",
+              "SELECT ROUND(AVG(n), 2) FROM (SELECT COUNT(*) AS n ... GROUP BY empresa) t",
+              "SELECT ROUND(AVG(n), 2) FROM (SELECT COUNT(*) AS n FROM vagas GROUP BY empresa) t"),
+    Exercicio(82, "derivadas", "Recorde de vagas de uma empresa",
+              "Quantas vagas tem a empresa que mais contrata? Use uma subconsulta no FROM. Uma coluna.",
+              "MAX(n) sobre uma tabela derivada que conta por empresa",
+              "SELECT MAX(n) FROM (SELECT COUNT(*) AS n FROM vagas GROUP BY empresa) t"),
+    Exercicio(83, "derivadas", "Empresas por tamanho",
+              "Quantas empresas têm 1 vaga, 2 vagas, 3 vagas...? Colunas: `vagas` e `empresas`. "
+              "Ordem por `vagas`.",
+              "agrupe duas vezes: primeiro por empresa (no FROM), depois pelo número de vagas",
+              "SELECT n AS vagas, COUNT(*) AS empresas FROM "
+              "(SELECT empresa, COUNT(*) AS n FROM vagas GROUP BY empresa) t GROUP BY n ORDER BY n", True),
+    Exercicio(84, "derivadas", "Skills por vaga, em média",
+              "Em média, quantas skills cada vaga pede (considere só vagas que aparecem em `vaga_skill`)? "
+              "Uma coluna, arredondada para 2 casas.",
+              "conte por id numa subconsulta no FROM e tire a média",
+              "SELECT ROUND(AVG(k), 2) FROM (SELECT COUNT(*) AS k FROM vaga_skill GROUP BY id) t"),
+    Exercicio(85, "derivadas", "Vagas com 5 skills ou mais",
+              "Quantas vagas pedem 5 skills ou mais? Use uma subconsulta no FROM com HAVING. Uma coluna.",
+              "SELECT COUNT(*) FROM (SELECT id FROM vaga_skill GROUP BY id HAVING COUNT(*) >= 5) t",
+              "SELECT COUNT(*) FROM (SELECT id FROM vaga_skill GROUP BY id HAVING COUNT(*) >= 5) t"),
+    Exercicio(86, "derivadas", "Vagas que pedem SQL (IN)",
+              "Liste `titulo` e `empresa` das vagas que pedem a skill 'SQL', usando IN com subconsulta "
+              "(sem JOIN). Ordem: `empresa`, depois `titulo`.",
+              "WHERE id IN (SELECT id FROM vaga_skill WHERE skill = '...')",
+              "SELECT titulo, empresa FROM vagas WHERE id IN (SELECT id FROM vaga_skill WHERE skill = 'SQL') "
+              "ORDER BY empresa, titulo", True),
+    Exercicio(87, "derivadas", "Empresas sem vaga remota (NOT IN)",
+              "Quantas empresas diferentes não têm nenhuma vaga remota? Use NOT IN com subconsulta. "
+              "Uma coluna.",
+              "NOT IN quebra se a subconsulta devolver NULL: filtre IS NOT NULL dentro dela",
+              "SELECT COUNT(DISTINCT empresa) FROM vagas WHERE empresa NOT IN "
+              "(SELECT empresa FROM vagas WHERE modelo = 'remoto' AND empresa IS NOT NULL)"),
+    Exercicio(88, "derivadas", "Empresas líderes (>= ALL)",
+              "Liste a(s) `empresa`(s) com o maior número de vagas, usando `>= ALL` com subconsulta "
+              "no HAVING. Ordem por `empresa`.",
+              "HAVING COUNT(*) >= ALL (SELECT COUNT(*) FROM vagas GROUP BY empresa)",
+              "SELECT empresa FROM vagas GROUP BY empresa "
+              "HAVING COUNT(*) >= ALL (SELECT COUNT(*) FROM vagas GROUP BY empresa) ORDER BY empresa", True),
+    Exercicio(89, "derivadas", "Vagas de quem contrata estagiário",
+              "Quantas vagas pertencem a empresas que têm pelo menos uma vaga de `estágio`? Use IN. "
+              "Uma coluna.",
+              "WHERE empresa IN (SELECT empresa FROM vagas WHERE nivel = '...')",
+              "SELECT COUNT(*) FROM vagas WHERE empresa IN (SELECT empresa FROM vagas WHERE nivel = 'estágio')"),
+    Exercicio(90, "derivadas", "Skills acima da média de pedidos",
+              "Liste `skill` e em quantas vagas aparece, só das skills pedidas em mais vagas que a média "
+              "por skill. Ordem: mais vagas primeiro, depois `skill`.",
+              "tabela derivada no FROM e, no WHERE, uma subconsulta que também calcula a média",
+              "SELECT skill, n FROM (SELECT skill, COUNT(*) AS n FROM vaga_skill GROUP BY skill) t "
+              "WHERE n > (SELECT AVG(c) FROM (SELECT COUNT(*) AS c FROM vaga_skill GROUP BY skill) u) "
+              "ORDER BY n DESC, skill", True),
 ]
