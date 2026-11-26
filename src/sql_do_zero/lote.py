@@ -1,6 +1,7 @@
 """Correção em lote (`corrigir --todos`) e contagem de tentativas por exercício."""
 
 import json
+import random
 import re
 from pathlib import Path
 
@@ -91,3 +92,12 @@ def agrupar_por_nivel(exercicios) -> dict[str, list[int]]:
     for ex in exercicios:
         r.setdefault(ex.nivel, []).append(ex.numero)
     return r
+
+
+def sortear(exercicios, nivel: str | None = None, semente: int | None = None):
+    """Um exercício aleatório (do nível pedido, se houver). `semente` fixa o sorteio.
+
+    Devolve None se o nível não existir.
+    """
+    lista = [e for e in exercicios if nivel is None or e.nivel == nivel]
+    return random.Random(semente).choice(lista) if lista else None

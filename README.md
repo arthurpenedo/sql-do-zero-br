@@ -28,6 +28,7 @@ pip install -e ".[dev]"
 sql-do-zero listar            # os 100 exercícios
 sql-do-zero niveis            # os 15 níveis, com contagem e números
 sql-do-zero ver 6             # enunciado e dica
+sql-do-zero sortear --nivel case   # um exercício aleatório (--semente 3 repete o sorteio)
 sql-do-zero dica 6            # só a dica, sem o enunciado
 sql-do-zero corrigir 6 minha.sql
 # corrige uma pasta inteira (arquivos 01.sql, 7-top.sql...) e conta as tentativas
@@ -78,7 +79,7 @@ Próximo a tentar: 2, 3, 4, 5, 7
 
 ## Números medidos
 
-- 100/100 gabaritos corrigem como corretos (`sql-do-zero medir`); 135 testes passando, rodando no CI (Python 3.11 e 3.13).
+- 100/100 gabaritos corrigem como corretos (`sql-do-zero medir`); 140 testes passando, rodando no CI (Python 3.11 e 3.13).
 - Dados: 214 vagas, 129 empresas, 69 remotas (32,2%).
 
 ## Limites

@@ -12,6 +12,7 @@ from .lote import (
     corrigir_pasta,
     registrar,
     resumo_progresso,
+    sortear,
 )
 from .pagina import gerar_pagina
 
@@ -34,6 +35,9 @@ def main(argv: list[str] | None = None) -> int:
     pro = sub.add_parser("progresso", help="resume o JSON de --tentativas: acertos, pendentes e média")
     pro.add_argument("arquivo", type=Path)
     sub.add_parser("niveis", help="mostra os níveis, quantos exercícios e quais números")
+    sor = sub.add_parser("sortear", help="mostra um exercício aleatório (sem o gabarito)")
+    sor.add_argument("--nivel", help="sorteia só dentro deste nível (veja `niveis`)")
+    sor.add_argument("--semente", type=int, help="fixa o sorteio, para repetir o resultado")
     sub.add_parser("medir", help="roda todos os gabaritos e confere que se corrigem sozinhos")
     dem = sub.add_parser("demo", help="gera a página HTML com os enunciados (gabarito escondido)")
     dem.add_argument("--saida", type=Path, default=Path("site/index.html"))
@@ -49,6 +53,13 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "corrigir" and a.tentativas and a.tentativas.is_dir():
         print(f"--tentativas precisa ser um arquivo .json, mas {a.tentativas} é uma pasta.", file=sys.stderr)
         return 2
+    if a.cmd == "sortear":
+        ex = sortear(EXERCICIOS, a.nivel, a.semente)
+        if ex is None:
+            print(f"Nível desconhecido: {a.nivel}. Veja `sql-do-zero niveis`.", file=sys.stderr)
+            return 2
+        print(f"{ex.numero}. {ex.titulo} [{ex.nivel}]\n\n{ex.enunciado}\n\nDica: {ex.dica}")
+        return 0
     if a.cmd == "niveis":
         for nivel, numeros in agrupar_por_nivel(EXERCICIOS).items():
             print(f"{nivel:14s} {len(numeros):2d}  {', '.join(map(str, numeros))}")
