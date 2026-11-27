@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/arthurpenedo/sql-do-zero-br/actions/workflows/ci.yml/badge.svg)
 
-110 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
+120 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
 
 ## O problema
 
@@ -12,7 +12,7 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ## O que faz
 
-- 110 exercícios em 16 níveis (o novo: **junções**: auto-junção, junção dupla e LEFT JOIN; antes: **case**: CASE WHEN em contagem condicional, faixas, ORDER BY e prioridade; antes: **derivadas**: subconsulta no FROM, IN, NOT IN e `>= ALL`; **cte**: WITH, várias CTEs, WITH RECURSIVE; **rollup**: GROUP BY ROLLUP, GROUPING e total geral; antes: **janelas**: ROW_NUMBER, RANK, LAG, soma acumulada; **correlacionada**: subconsulta correlacionada, EXISTS e NOT EXISTS; antes: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
+- 120 exercícios em 17 níveis (o novo: **texto**: LIKE/ILIKE, regexp, `split_part`, `length` e `string_agg`; antes: **junções**: auto-junção, junção dupla e LEFT JOIN; antes: **case**: CASE WHEN em contagem condicional, faixas, ORDER BY e prioridade; antes: **derivadas**: subconsulta no FROM, IN, NOT IN e `>= ALL`; **cte**: WITH, várias CTEs, WITH RECURSIVE; **rollup**: GROUP BY ROLLUP, GROUPING e total geral; antes: **janelas**: ROW_NUMBER, RANK, LAG, soma acumulada; **correlacionada**: subconsulta correlacionada, EXISTS e NOT EXISTS; antes: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
   **junção** (JOIN, LEFT JOIN), **avançado** (CASE, CTE, funções de janela), **datas** (intervalos,
   `strftime`, média móvel) e **subconsultas** (IN, EXISTS, correlacionadas).
 - Página estática com os enunciados e o gabarito escondido (`sql-do-zero demo`), publicada pelo `pagina.yml`. Tem filtro por nível feito só com CSS (sem JavaScript).
@@ -25,8 +25,8 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ```bash
 pip install -e ".[dev]"
-sql-do-zero listar            # os 110 exercícios
-sql-do-zero niveis            # os 16 níveis, com contagem e números
+sql-do-zero listar            # os 120 exercícios
+sql-do-zero niveis            # os 17 níveis, com contagem e números
 sql-do-zero ver 6             # enunciado e dica
 sql-do-zero sortear --nivel case   # um exercício aleatório (--semente 3 repete o sorteio)
 sql-do-zero dica 6            # só a dica, sem o enunciado
@@ -39,7 +39,7 @@ sql-do-zero medir             # confere que os 110 gabaritos se corrigem sozinho
 sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)
 ```
 
-### Os 16 níveis (`sql-do-zero niveis` imprime o mesmo)
+### Os 17 níveis (`sql-do-zero niveis` imprime o mesmo)
 
 | Nível | Exercícios | Números |
 |---|---|---|
@@ -59,6 +59,7 @@ sql-do-zero demo              # gera site/index.html (enunciados, gabarito escon
 | derivadas | 10 | 81, 82, 83, 84, 85, 86, 87, 88, 89, 90 |
 | case | 10 | 91, 92, 93, 94, 95, 96, 97, 98, 99, 100 |
 | junções | 10 | 101, 102, 103, 104, 105, 106, 107, 108, 109, 110 |
+| texto | 10 | 111, 112, 113, 114, 115, 116, 117, 118, 119, 120 |
 
 ### Exemplo do `progresso`
 
@@ -67,7 +68,7 @@ Para testar sem resolver nada, use o arquivo pronto: `sql-do-zero progresso dado
 Com um `progresso.json` em que o 1 e o 6 foram resolvidos e o 12 ainda não:
 
 ```text
-2/110 exercícios resolvidos
+2/120 exercícios resolvidos
   básico        1/5
   agrupar       1/7
   junção        0/6
@@ -80,7 +81,7 @@ Próximo a tentar: 2, 3, 4, 5, 7
 
 ## Números medidos
 
-- 110/110 gabaritos corrigem como corretos (`sql-do-zero medir`); 150 testes passando, rodando no CI (Python 3.11 e 3.13).
+- 120/120 gabaritos corrigem como corretos (`sql-do-zero medir`); 160 testes passando, rodando no CI (Python 3.11 e 3.13).
 - Dados: 214 vagas, 129 empresas, 69 remotas (32,2%).
 
 ## Limites

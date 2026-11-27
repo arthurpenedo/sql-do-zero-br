@@ -1,4 +1,4 @@
-"""Os 110 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 120 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -669,4 +669,59 @@ EXERCICIOS: list[Exercicio] = [
               "SELECT v1.id AS a, v2.id AS b FROM vagas v1 JOIN vagas v2 "
               "ON v1.empresa = v2.empresa AND v1.cidade = v2.cidade AND v1.id < v2.id "
               "ORDER BY a, b LIMIT 5", True),
+    Exercicio(111, "texto", "Python no título, sem ligar para maiúsculas",
+              "Liste o `id` das vagas cujo `titulo` contém 'python' (maiúscula ou minúscula). "
+              "Ordem por `id`; só as 4 primeiras linhas.",
+              "ILIKE '%python%' ignora maiúsculas; LIKE não",
+              "SELECT id FROM vagas WHERE titulo ILIKE '%python%' ORDER BY id LIMIT 4", True),
+    Exercicio(112, "texto", "Títulos que começam com Engenheir ou Analista",
+              "Quantas vagas têm `titulo` começando com 'Engenheir' ou 'Analista'? Uma coluna.",
+              "regexp_matches(titulo, '^(Engenheir|Analista)'); o ^ prende no começo do texto",
+              "SELECT COUNT(*) FROM vagas WHERE regexp_matches(titulo, '^(Engenheir|Analista)')"),
+    Exercicio(113, "texto", "Marca de gênero no título",
+              "Quantas vagas têm '(a)' ou '(o)' no `titulo`, como em 'Engenheiro(a)'? Uma coluna.",
+              "os parênteses são especiais na regexp: escape com \\\\( e \\\\), ou use LIKE '%(a)%'",
+              "SELECT COUNT(*) FROM vagas WHERE titulo LIKE '%(a)%' OR titulo LIKE '%(o)%'"),
+    Exercicio(114, "texto", "Primeira palavra do título",
+              "Quais são as 5 primeiras palavras de `titulo` mais comuns (a palavra antes do primeiro espaço)? "
+              "Colunas: `palavra`, `total`. Ordem: `total` decrescente e `palavra`.",
+              "split_part(titulo, ' ', 1) pega a primeira palavra; depois GROUP BY",
+              "SELECT split_part(titulo, ' ', 1) AS palavra, COUNT(*) AS total FROM vagas "
+              "GROUP BY palavra ORDER BY total DESC, palavra LIMIT 5", True),
+    Exercicio(115, "texto", "Títulos com barra vertical, por nível",
+              "Entre as vagas com '|' no `titulo`, quantas há em cada `nivel`? "
+              "Colunas: `nivel`, `total`. Ordem: `total` decrescente e `nivel`.",
+              "LIKE '%|%' no WHERE e GROUP BY nivel",
+              "SELECT nivel, COUNT(*) AS total FROM vagas WHERE titulo LIKE '%|%' "
+              "GROUP BY nivel ORDER BY total DESC, nivel", True),
+    Exercicio(116, "texto", "Os títulos mais longos",
+              "Liste as 3 vagas de `titulo` mais longo. Colunas: `id`, `tamanho` (número de caracteres). "
+              "Ordem: `tamanho` decrescente e `id`.",
+              "length(titulo) conta caracteres",
+              "SELECT id, length(titulo) AS tamanho FROM vagas ORDER BY tamanho DESC, id LIMIT 3", True),
+    Exercicio(117, "texto", "Skills de cada vaga numa linha só",
+              "Para as vagas com `id` de 1 a 3, junte as skills numa única coluna de texto separada por ', ' "
+              "e em ordem alfabética. Colunas: `id`, `skills`. Ordem por `id`.",
+              "string_agg(skill, ', ' ORDER BY skill) com GROUP BY id",
+              "SELECT v.id, string_agg(s.skill, ', ' ORDER BY s.skill) AS skills FROM vagas v "
+              "JOIN vaga_skill s ON s.id = v.id WHERE v.id <= 3 GROUP BY v.id ORDER BY v.id", True),
+    Exercicio(118, "texto", "Empresas com mais de um nível",
+              "Liste as 5 primeiras empresas (em ordem alfabética) que têm vagas em mais de um `nivel`, "
+              "com os níveis distintos numa coluna de texto separada por ', ' e em ordem alfabética. "
+              "Colunas: `empresa`, `niveis`.",
+              "string_agg(DISTINCT nivel, ', ' ORDER BY nivel) e HAVING COUNT(DISTINCT nivel) > 1",
+              "SELECT empresa, string_agg(DISTINCT nivel, ', ' ORDER BY nivel) AS niveis FROM vagas "
+              "GROUP BY empresa HAVING COUNT(DISTINCT nivel) > 1 ORDER BY empresa LIMIT 5", True),
+    Exercicio(119, "texto", "Empresas grandes e as cidades onde contratam",
+              "Para as empresas com 4 ou mais vagas, mostre quantas vagas e as cidades distintas numa coluna "
+              "de texto ', ' em ordem alfabética (string_agg ignora NULL; se todas forem NULL o resultado é NULL). "
+              "Colunas: `empresa`, `vagas`, `cidades`. Ordem: `vagas` decrescente e `empresa`; só 5 linhas.",
+              "string_agg(DISTINCT cidade, ', ' ORDER BY cidade) com HAVING COUNT(*) >= 4",
+              "SELECT empresa, COUNT(*) AS vagas, string_agg(DISTINCT cidade, ', ' ORDER BY cidade) AS cidades "
+              "FROM vagas GROUP BY empresa HAVING COUNT(*) >= 4 ORDER BY vagas DESC, empresa LIMIT 5", True),
+    Exercicio(120, "texto", "Títulos todos em maiúsculas",
+              "Liste `id` e `titulo` das vagas cujo `titulo` está todo em maiúsculas. Ordem por `id`; "
+              "só as 5 primeiras linhas.",
+              "titulo = upper(titulo)",
+              "SELECT id, titulo FROM vagas WHERE titulo = upper(titulo) ORDER BY id LIMIT 5", True),
 ]

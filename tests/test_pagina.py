@@ -24,9 +24,9 @@ def test_cli_demo_grava_arquivo(tmp_path):
 
 def test_pagina_do_demo_tem_90_exercicios_e_indice_completo():
     html = gerar_pagina()
-    assert len(EXERCICIOS) == 110
-    assert "SQL do zero: 110 exercícios" in html
-    assert html.count('<a href="#ex') == 110
+    assert len(EXERCICIOS) == 120
+    assert "SQL do zero: 120 exercícios" in html
+    assert html.count('<a href="#ex') == 120
 
 
 def test_pagina_tem_filtro_por_nivel_sem_javascript():
