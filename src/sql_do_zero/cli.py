@@ -18,7 +18,7 @@ from .pagina import gerar_pagina
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="sql-do-zero", description="100 exercícios de SQL com correção automática")
+    p = argparse.ArgumentParser(prog="sql-do-zero", description="110 exercícios de SQL com correção automática")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("listar", help="lista os exercícios")
     ver = sub.add_parser("ver", help="mostra o enunciado")

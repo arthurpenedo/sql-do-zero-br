@@ -1,4 +1,4 @@
-"""Os 100 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
+"""Os 110 exercícios. Cada um tem enunciado, dica e a consulta de gabarito.
 
 Tabelas: `vagas(id, titulo, empresa, cidade, uf, modelo, nivel, publicada, fonte, url)`
 e `vaga_skill(id, skill)` (`id` aponta para `vagas.id`).
@@ -601,4 +601,72 @@ EXERCICIOS: list[Exercicio] = [
               "ORDER BY CASE WHEN modelo = 'remoto' THEN 0 ELSE 1 END, titulo, empresa, depois LIMIT 5",
               "SELECT titulo, modelo FROM vagas "
               "ORDER BY CASE WHEN modelo = 'remoto' THEN 0 ELSE 1 END, titulo, empresa LIMIT 5", True),
+    Exercicio(101, "junções", "Pares de skills juntas",
+              "Quais pares de skills aparecem juntos na mesma vaga? Liste os 5 pares mais frequentes. "
+              "Colunas: `a`, `b`, `total`, com `a` antes de `b` em ordem alfabética. "
+              "Desempate por `a` e depois `b`.",
+              "junte vaga_skill com ela mesma pelo `id` e use s1.skill < s2.skill para não repetir o par",
+              "SELECT s1.skill AS a, s2.skill AS b, COUNT(*) AS total FROM vaga_skill s1 "
+              "JOIN vaga_skill s2 ON s1.id = s2.id AND s1.skill < s2.skill "
+              "GROUP BY a, b ORDER BY total DESC, a, b LIMIT 5", True),
+    Exercicio(102, "junções", "Vagas com SQL e Python (junção dupla)",
+              "Liste `titulo` das vagas que pedem 'SQL' e também 'Python', usando duas junções com "
+              "`vaga_skill` (uma por skill). Ordem alfabética.",
+              "JOIN vaga_skill a ON a.id = v.id AND a.skill = 'SQL' e outro JOIN com 'Python'",
+              "SELECT v.titulo FROM vagas v "
+              "JOIN vaga_skill a ON a.id = v.id AND a.skill = 'SQL' "
+              "JOIN vaga_skill b ON b.id = v.id AND b.skill = 'Python' ORDER BY v.titulo", True),
+    Exercicio(103, "junções", "Empresas com vaga remota e presencial",
+              "Liste as `empresa` que têm ao mesmo tempo uma vaga remota e uma presencial. "
+              "Cada empresa uma vez, em ordem alfabética.",
+              "auto-junção: vagas r JOIN vagas p ON r.empresa = p.empresa, com um modelo em cada lado",
+              "SELECT DISTINCT r.empresa FROM vagas r "
+              "JOIN vagas p ON p.empresa = r.empresa AND r.modelo = 'remoto' AND p.modelo = 'presencial' "
+              "ORDER BY r.empresa", True),
+    Exercicio(104, "junções", "Skill mais pedida em vagas remotas",
+              "Quais são as 3 skills mais pedidas em vagas remotas? Colunas: `skill`, `total`. "
+              "Desempate por `skill`.",
+              "JOIN entre vagas e vaga_skill, filtre modelo = 'remoto'",
+              "SELECT s.skill, COUNT(*) AS total FROM vagas v JOIN vaga_skill s ON s.id = v.id "
+              "WHERE v.modelo = 'remoto' GROUP BY s.skill ORDER BY total DESC, s.skill LIMIT 3", True),
+    Exercicio(105, "junções", "Vagas sem nenhuma skill",
+              "Quantas vagas não têm nenhuma linha em `vaga_skill`? Use LEFT JOIN. Uma coluna.",
+              "LEFT JOIN ... WHERE s.id IS NULL",
+              "SELECT COUNT(*) FROM vagas v LEFT JOIN vaga_skill s ON s.id = v.id WHERE s.id IS NULL"),
+    Exercicio(106, "junções", "Skills por vaga, média por nível",
+              "Para cada `nivel`, qual é a média de skills por vaga (só vagas que têm skill), com 1 casa "
+              "decimal? Colunas: `nivel`, `media`. Ordem por `media` decrescente e `nivel`.",
+              "primeiro conte skills por vaga numa subconsulta, depois junte com vagas e use AVG",
+              "SELECT v.nivel, ROUND(AVG(c.n), 1) AS media FROM vagas v "
+              "JOIN (SELECT id, COUNT(*) AS n FROM vaga_skill GROUP BY id) c ON c.id = v.id "
+              "GROUP BY v.nivel ORDER BY media DESC, v.nivel", True),
+    Exercicio(107, "junções", "Empresas e skills distintas",
+              "Quantas skills distintas cada empresa pede nas suas vagas? Liste as 5 empresas com mais "
+              "skills distintas. Colunas: `empresa`, `skills`. Desempate por `empresa`.",
+              "COUNT(DISTINCT s.skill) depois do JOIN, GROUP BY empresa",
+              "SELECT v.empresa, COUNT(DISTINCT s.skill) AS skills FROM vagas v "
+              "JOIN vaga_skill s ON s.id = v.id GROUP BY v.empresa ORDER BY skills DESC, v.empresa LIMIT 5",
+              True),
+    Exercicio(108, "junções", "Skills de estágio e de júnior",
+              "Liste as skills pedidas ao mesmo tempo em alguma vaga de 'estágio' e em alguma vaga de "
+              "'júnior/trainee'. Ordem alfabética.",
+              "GROUP BY skill HAVING com SUM(CASE ...) > 0 para cada nível (ou INTERSECT)",
+              "SELECT s.skill FROM vaga_skill s JOIN vagas v ON v.id = s.id GROUP BY s.skill "
+              "HAVING SUM(CASE WHEN v.nivel = 'estágio' THEN 1 ELSE 0 END) > 0 "
+              "AND SUM(CASE WHEN v.nivel = 'júnior/trainee' THEN 1 ELSE 0 END) > 0 "
+              "ORDER BY s.skill", True),
+    Exercicio(109, "junções", "Mais de uma vaga no mesmo dia",
+              "Liste as empresas que publicaram mais de uma vaga no mesmo dia, com a data. "
+              "Colunas: `empresa`, `publicada`, `total`. Ordem: `total` decrescente, `empresa`, `publicada`; "
+              "só as 5 primeiras linhas.",
+              "GROUP BY empresa, publicada HAVING COUNT(*) > 1",
+              "SELECT empresa, publicada, COUNT(*) AS total FROM vagas GROUP BY empresa, publicada "
+              "HAVING COUNT(*) > 1 ORDER BY total DESC, empresa, publicada LIMIT 5", True),
+    Exercicio(110, "junções", "Vagas da mesma empresa e cidade",
+              "Liste pares de vagas (`a`, `b`: os `id`) da mesma empresa e mesma cidade, com `a` menor que "
+              "`b`. Ordem por `a` e `b`; só as 5 primeiras linhas. Ignore cidades NULL.",
+              "auto-junção em empresa e cidade, v1.id < v2.id evita par repetido",
+              "SELECT v1.id AS a, v2.id AS b FROM vagas v1 JOIN vagas v2 "
+              "ON v1.empresa = v2.empresa AND v1.cidade = v2.cidade AND v1.id < v2.id "
+              "ORDER BY a, b LIMIT 5", True),
 ]
