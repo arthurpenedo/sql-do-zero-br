@@ -10,8 +10,8 @@ def con():
     return conectar()
 
 
-def test_tem_120_exercicios_numerados():
-    assert [e.numero for e in EXERCICIOS] == list(range(1, 121))
+def test_tem_130_exercicios_numerados():
+    assert [e.numero for e in EXERCICIOS] == list(range(1, 131))
 
 
 @pytest.mark.parametrize("ex", EXERCICIOS, ids=lambda e: "ex" + str(e.numero))
@@ -52,7 +52,7 @@ def test_erro_de_sintaxe_vira_mensagem(con):
 
 def test_exercicio_inexistente():
     with pytest.raises(KeyError):
-        buscar(121)
+        buscar(131)
 
 
 def test_cli_medir_e_corrigir(tmp_path, capsys):
@@ -62,4 +62,4 @@ def test_cli_medir_e_corrigir(tmp_path, capsys):
     assert main(["corrigir", "1", str(arq)]) == 0
     assert "Correto" in capsys.readouterr().out
     assert main(["corrigir", "1", str(tmp_path / "nao.sql")]) == 2
-    assert main(["ver", "121"]) == 2
+    assert main(["ver", "131"]) == 2

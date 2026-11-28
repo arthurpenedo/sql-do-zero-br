@@ -724,4 +724,63 @@ EXERCICIOS: list[Exercicio] = [
               "só as 5 primeiras linhas.",
               "titulo = upper(titulo)",
               "SELECT id, titulo FROM vagas WHERE titulo = upper(titulo) ORDER BY id LIMIT 5", True),
+    Exercicio(121, "datas", "Vagas por semana",
+              "Conte as vagas por semana de `publicada` (a segunda-feira que abre a semana). "
+              "Colunas: `semana` (tipo DATE), `total`. Ordem por `semana`.",
+              "date_trunc('week', publicada) devolve a segunda-feira; use ::DATE para tirar a hora",
+              "SELECT date_trunc('week', publicada)::DATE AS semana, COUNT(*) AS total FROM vagas "
+              "GROUP BY semana ORDER BY semana", True),
+    Exercicio(122, "datas", "Janela de coleta em dias",
+              "Quantos dias separam a primeira da última data de `publicada`? Coluna: `dias`.",
+              "date_diff('day', MIN(publicada), MAX(publicada))",
+              "SELECT date_diff('day', MIN(publicada), MAX(publicada)) AS dias FROM vagas", True),
+    Exercicio(123, "datas", "Vagas por mês",
+              "Conte as vagas por mês de `publicada`, no formato AAAA-MM. Colunas: `mes`, `total`. "
+              "Ordem por `mes`.",
+              "strftime(publicada, '%Y-%m')",
+              "SELECT strftime(publicada, '%Y-%m') AS mes, COUNT(*) AS total FROM vagas "
+              "GROUP BY mes ORDER BY mes", True),
+    Exercicio(124, "datas", "Dia da semana com mais vagas",
+              "Conte as vagas por dia da semana de `publicada` (nome em inglês, como o DuckDB devolve). "
+              "Colunas: `dia`, `total`. Ordem: `total` decrescente e `dia`.",
+              "dayname(publicada)",
+              "SELECT dayname(publicada) AS dia, COUNT(*) AS total FROM vagas "
+              "GROUP BY dia ORDER BY total DESC, dia", True),
+    Exercicio(125, "datas", "Estágios da última semana",
+              "Liste `id` e `titulo` das vagas de nível `estágio` publicadas nos 7 dias que terminam em "
+              "2026-10-19 (inclusive o dia 19). Ordem por `id`.",
+              "publicada >= DATE '2026-10-19' - INTERVAL 7 DAY",
+              "SELECT id, titulo FROM vagas WHERE publicada >= DATE '2026-10-19' - INTERVAL 7 DAY "
+              "AND nivel = 'estágio' ORDER BY id", True),
+    Exercicio(126, "datas", "Prazo de 30 dias",
+              "Para as 3 primeiras vagas por `id`, calcule a data 30 dias depois de `publicada`. "
+              "Colunas: `id`, `vence` (tipo DATE). Ordem por `id`.",
+              "publicada + INTERVAL 30 DAY devolve data e hora; use ::DATE",
+              "SELECT id, (publicada + INTERVAL 30 DAY)::DATE AS vence FROM vagas ORDER BY id LIMIT 3", True),
+    Exercicio(127, "datas", "Publicações em fim de semana",
+              "Liste as datas de `publicada` que caem em sábado ou domingo e quantas vagas cada uma tem. "
+              "Colunas: `publicada`, `total`. Ordem por `publicada`.",
+              "dayofweek(publicada): 0 é domingo e 6 é sábado",
+              "SELECT publicada, COUNT(*) AS total FROM vagas WHERE dayofweek(publicada) IN (0, 6) "
+              "GROUP BY publicada ORDER BY publicada", True),
+    Exercicio(128, "datas", "Empresas que publicam há mais tempo",
+              "Entre as empresas com vagas em mais de uma data, mostre as 5 com maior intervalo em dias "
+              "entre a primeira e a última `publicada`. Colunas: `empresa`, `dias`. "
+              "Ordem: `dias` decrescente e `empresa`.",
+              "date_diff('day', MIN(publicada), MAX(publicada)) com HAVING COUNT(DISTINCT publicada) > 1",
+              "SELECT empresa, date_diff('day', MIN(publicada), MAX(publicada)) AS dias FROM vagas "
+              "GROUP BY empresa HAVING COUNT(DISTINCT publicada) > 1 ORDER BY dias DESC, empresa LIMIT 5", True),
+    Exercicio(129, "datas", "Acumulado por dia",
+              "Para as 5 primeiras datas de `publicada`, mostre o total do dia e o total acumulado "
+              "desde o começo. Colunas: `publicada`, `total`, `acumulado`. Ordem por `publicada`.",
+              "SUM(COUNT(*)) OVER (ORDER BY publicada) sobre o GROUP BY",
+              "SELECT publicada, COUNT(*) AS total, SUM(COUNT(*)) OVER (ORDER BY publicada) AS acumulado "
+              "FROM vagas GROUP BY publicada ORDER BY publicada LIMIT 5", True),
+    Exercicio(130, "datas", "Variação em relação ao dia anterior",
+              "Para as 5 primeiras datas de `publicada`, mostre o total do dia e a diferença para o dia "
+              "anterior (NULL no primeiro). Colunas: `publicada`, `total`, `variacao`. Ordem por `publicada`.",
+              "LAG(total) OVER (ORDER BY publicada) sobre uma subconsulta no FROM",
+              "SELECT publicada, total, total - LAG(total) OVER (ORDER BY publicada) AS variacao FROM "
+              "(SELECT publicada, COUNT(*) AS total FROM vagas GROUP BY publicada) "
+              "ORDER BY publicada LIMIT 5", True),
 ]

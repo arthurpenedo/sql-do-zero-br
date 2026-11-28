@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/arthurpenedo/sql-do-zero-br/actions/workflows/ci.yml/badge.svg)
 
-120 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
+130 exercícios de SQL sobre **vagas reais de tecnologia**, com correção automática em DuckDB. Zero instalação de banco, zero custo.
 
 ## O problema
 
@@ -12,7 +12,7 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ## O que faz
 
-- 120 exercícios em 17 níveis (o novo: **texto**: LIKE/ILIKE, regexp, `split_part`, `length` e `string_agg`; antes: **junções**: auto-junção, junção dupla e LEFT JOIN; antes: **case**: CASE WHEN em contagem condicional, faixas, ORDER BY e prioridade; antes: **derivadas**: subconsulta no FROM, IN, NOT IN e `>= ALL`; **cte**: WITH, várias CTEs, WITH RECURSIVE; **rollup**: GROUP BY ROLLUP, GROUPING e total geral; antes: **janelas**: ROW_NUMBER, RANK, LAG, soma acumulada; **correlacionada**: subconsulta correlacionada, EXISTS e NOT EXISTS; antes: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
+- 130 exercícios em 17 níveis (mais 10 em **datas**: `date_trunc`, `date_diff`, `strftime`, `INTERVAL`, `dayofweek` e janelas por dia; antes: **texto**: LIKE/ILIKE, regexp, `split_part`, `length` e `string_agg`; antes: **junções**: auto-junção, junção dupla e LEFT JOIN; antes: **case**: CASE WHEN em contagem condicional, faixas, ORDER BY e prioridade; antes: **derivadas**: subconsulta no FROM, IN, NOT IN e `>= ALL`; **cte**: WITH, várias CTEs, WITH RECURSIVE; **rollup**: GROUP BY ROLLUP, GROUPING e total geral; antes: **janelas**: ROW_NUMBER, RANK, LAG, soma acumulada; **correlacionada**: subconsulta correlacionada, EXISTS e NOT EXISTS; antes: **nulos**: IS NULL, COALESCE, auto-junção; **união**: UNION e UNION ALL): **básico** (SELECT, WHERE, ORDER BY), **agrupar** (GROUP BY, HAVING),
   **junção** (JOIN, LEFT JOIN), **avançado** (CASE, CTE, funções de janela), **datas** (intervalos,
   `strftime`, média móvel) e **subconsultas** (IN, EXISTS, correlacionadas).
 - Página estática com os enunciados e o gabarito escondido (`sql-do-zero demo`), publicada pelo `pagina.yml`. Tem filtro por nível feito só com CSS (sem JavaScript).
@@ -25,7 +25,7 @@ SQL aparece em 87 das 214 vagas do conjunto de dados (41%) e é pedido em 50% da
 
 ```bash
 pip install -e ".[dev]"
-sql-do-zero listar            # os 120 exercícios
+sql-do-zero listar            # os 130 exercícios
 sql-do-zero niveis            # os 17 níveis, com contagem e números
 sql-do-zero ver 6             # enunciado e dica
 sql-do-zero sortear --nivel case   # um exercício aleatório (--semente 3 repete o sorteio)
@@ -35,7 +35,7 @@ sql-do-zero corrigir 6 minha.sql
 sql-do-zero corrigir --todos respostas/ --tentativas progresso.json
 sql-do-zero gabarito 6        # só depois de tentar
 sql-do-zero progresso progresso.json   # acertos, pendentes e média de tentativas por nível
-sql-do-zero medir             # confere que os 110 gabaritos se corrigem sozinhos
+sql-do-zero medir             # confere que os 130 gabaritos se corrigem sozinhos
 sql-do-zero demo              # gera site/index.html (enunciados, gabarito escondido)
 ```
 
@@ -47,7 +47,7 @@ sql-do-zero demo              # gera site/index.html (enunciados, gabarito escon
 | agrupar | 8 | 6, 7, 8, 9, 10, 31, 32, 45 |
 | junção | 6 | 11, 12, 13, 14, 15, 33 |
 | avançado | 8 | 16, 17, 18, 19, 20, 34, 35, 36 |
-| datas | 10 | 21, 22, 23, 24, 30, 37, 38, 46, 47, 48 |
+| datas | 20 | 21, 22, 23, 24, 30, 37, 38, 46, 47, 48, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130 |
 | subconsultas | 8 | 25, 26, 27, 28, 29, 39, 40, 44 |
 | nulos | 3 | 41, 42, 43 |
 | união | 2 | 49, 50 |
@@ -81,7 +81,7 @@ Próximo a tentar: 2, 3, 4, 5, 7
 
 ## Números medidos
 
-- 120/120 gabaritos corrigem como corretos (`sql-do-zero medir`); 160 testes passando, rodando no CI (Python 3.11 e 3.13).
+- 130/130 gabaritos corrigem como corretos (`sql-do-zero medir`); 170 testes passando, rodando no CI (Python 3.11 e 3.13).
 - Dados: 214 vagas, 129 empresas, 69 remotas (32,2%).
 
 ## Limites
